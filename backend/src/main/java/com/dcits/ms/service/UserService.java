@@ -31,10 +31,14 @@ public class UserService {
     DateGenerator dateGenerator;
 
 
-    public void create(String username, String password, String role) {
+    public User create(String username, String password, String role) {
         String sec = stringSupport.generate();
         User u = userFactory.create(username, shaPasswordEncoder.encodePassword(password, sec), sec, role);
-        userRepository.save(u);
+        return userRepository.save(u);
+    }
+
+    public void deleteAll(){
+        userRepository.deleteAll();;
     }
 
     public User isLoginValid(String username, String pass)  {
