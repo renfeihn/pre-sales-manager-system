@@ -36,23 +36,23 @@ public class Project {
     @Column(nullable = false)
     String endDate;
 
-    // 审批人
-    @Column(nullable = false)
-    String approver;
+    // 事业部
+    @JoinColumn(name = "department_id", referencedColumnName = "id", nullable = false, updatable = false)
+    @OneToOne(optional = false, targetEntity = Department.class)
+    Department department;
 
-    /**
-     * 是否中标 Y:是  N:否
-     */
-    @Column(nullable = false)
-    @org.hibernate.annotations.Type(type="yes_no")
-    Boolean isVictory;
+    // 产品族
+    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false, updatable = false)
+    @OneToOne(optional = false, targetEntity = Product.class)
+    Product product;
+
 
     @Column
     BigDecimal bidAmount;
 
 
     /**
-     * 项目流程：1.新建 2.一级审批中 3.审批通过 4.结束
+     * 项目流程：1.新建 2.结束 3.未中标 4.中标
      */
     @Column(nullable = false)
     String state;

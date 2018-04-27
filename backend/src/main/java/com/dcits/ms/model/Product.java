@@ -1,5 +1,6 @@
 package com.dcits.ms.model;
 
+
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
@@ -9,35 +10,21 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * 项目支持人员表
+ * 产品族信息表
  */
 @Entity
 @Setter
 @Getter
-@Table(name = "ms_project_supporter")
-public class Supporter {
+@Table(name = "ms_product")
+public class Product {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Integer id;
 
-    @JoinColumn(name = "projectId", referencedColumnName = "id", nullable = false, updatable = false)
-    @ManyToOne(optional = false, targetEntity = Project.class)
-    Project project;
-
-
-    // 支持人员姓名
-    @Column
-    String supportName;
-
-    // 支持人员岗位
-    @Column
-    String jobTittle;
-
-
-    @JoinColumn(name = "supportUserId", referencedColumnName = "id", nullable = false, updatable = false)
-    @ManyToOne(optional = false, targetEntity = User.class)
-    User supportUser;
+    @Column(nullable = false)
+    String prodName;
 
 
     @JoinColumn(name = "createUserId", referencedColumnName = "id", nullable = false, updatable = false)
@@ -46,7 +33,7 @@ public class Supporter {
 
 
     @JoinColumn(name = "updateUserId", referencedColumnName = "id", nullable = false, updatable = false)
-    @OneToOne(optional = false, targetEntity = User.class)
+    @ManyToOne(optional = false, targetEntity = User.class)
     protected User updateBy;
 
     // 备注
@@ -66,5 +53,11 @@ public class Supporter {
     // 删除标记（0：正常；1：删除）
     @Column
     protected String delFlag;
+
+
+    public Product() {
+
+    }
+
 
 }
