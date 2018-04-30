@@ -23,16 +23,14 @@ public class InitDatabase {
     @Autowired
     public InitDatabase(UserService userService, DepartmentService departmentService) {
 
+        departmentService.deleteAll();
         userService.deleteAll();
         User user = userService.create("admin", "888888", "USER");
 
 
-        departmentService.deleteAll();
         for (int i = 0; i < depNames.length; i++) {
             departmentService.create(depNames[i], user);
         }
 
     }
-
-
 }
