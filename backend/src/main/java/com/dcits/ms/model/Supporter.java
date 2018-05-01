@@ -28,16 +28,19 @@ public class Supporter {
 
     // 支持人员姓名
     @Column
-    String supportName;
+    String name;
 
     // 支持人员岗位
     @Column
     String jobTittle;
 
+    @Column
+    String departmentName;
 
-    @JoinColumn(name = "supportUserId", referencedColumnName = "id", nullable = false, updatable = false)
-    @ManyToOne(optional = false, targetEntity = User.class)
-    User supportUser;
+
+//    @JoinColumn(name = "supportUserId", referencedColumnName = "id", nullable = false, updatable = false)
+//    @ManyToOne(optional = false, targetEntity = User.class)
+//    User supportUser;
 
 
     @JoinColumn(name = "createUserId", referencedColumnName = "id", nullable = false, updatable = false)
@@ -46,7 +49,7 @@ public class Supporter {
 
 
     @JoinColumn(name = "updateUserId", referencedColumnName = "id", nullable = false, updatable = false)
-    @OneToOne(optional = false, targetEntity = User.class)
+    @ManyToOne(optional = false, targetEntity = User.class)
     protected User updateBy;
 
     // 备注
@@ -66,5 +69,22 @@ public class Supporter {
     // 删除标记（0：正常；1：删除）
     @Column
     protected String delFlag;
+
+
+    public Supporter() {
+    }
+
+
+    public Supporter(String name, String jobTittle, String departmentName,Project project ,User user) {
+        this.name = name;
+        this.jobTittle = jobTittle;
+        this.departmentName = departmentName;
+        this.project = project;
+        this.createBy = user;
+        this.updateBy = user;
+        this.createDate = new Date();
+        this.updateDate = new Date();
+    }
+
 
 }

@@ -1,5 +1,7 @@
 package com.dcits.ms.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,15 +20,19 @@ import java.util.Map;
 @RequestMapping("/api")
 public class UserController {
 
+    Logger logger = LoggerFactory.getLogger(this.getClass());
+
     static final String USERNAME = "username";
     static final String AUTHORIZATIONS = "permissions";
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public HttpEntity<Map> user(HttpServletRequest request) {
+
+        logger.debug("user start");
+
         Map<String, Object> result = new HashMap<String, Object>();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Map<String, Boolean> authorizations = new HashMap();
-        // TODO tem regras aqui que deveriam ir para o service
         for (GrantedAuthority grantedAuthority : auth.getAuthorities()) {
             authorizations.put(grantedAuthority.getAuthority(), Boolean.TRUE);
         }
@@ -39,12 +45,24 @@ public class UserController {
         return new HttpEntity(result);
     }
 
+    @RequestMapping(value = "/currentUser", method = RequestMethod.GET)
+    public HttpEntity<Map> currentUser(HttpServletRequest request) {
+        logger.debug("user start");
+        Map<String, Object> result = new HashMap<String, Object>();
+
+        result.put("name", "曲丽丽");
+        result.put("avatar", "https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png");
+        result.put("userid", "00000001");
+        result.put("notifyCount", 0);
+        return new HttpEntity(result);
+    }
+
+
     @RequestMapping(value = "login/account", method = RequestMethod.POST)
     public HttpEntity<Map> login(HttpServletRequest request) {
         Map<String, Object> result = new HashMap<String, Object>();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Map<String, Boolean> authorizations = new HashMap();
-        // TODO tem regras aqui que deveriam ir para o service
         for (GrantedAuthority grantedAuthority : auth.getAuthorities()) {
             authorizations.put(grantedAuthority.getAuthority(), Boolean.TRUE);
         }
@@ -52,6 +70,7 @@ public class UserController {
         String username = (String) auth.getPrincipal();
         result.put(USERNAME, username);
         result.put("currentAuthority", username);
+        result.put("status", "ok");
 
         if ("anonymousUser".equals(username)) {
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.security.access.method.P;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -38,17 +39,17 @@ public class Project {
 
     // 事业部
     @JoinColumn(name = "department_id", referencedColumnName = "id", nullable = false, updatable = false)
-    @OneToOne(optional = false, targetEntity = Department.class)
+    @ManyToOne(optional = false, targetEntity = Department.class)
     Department department;
 
     // 产品族
     @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false, updatable = false)
-    @OneToOne(optional = false, targetEntity = Product.class)
+    @ManyToOne(optional = false, targetEntity = Product.class)
     Product product;
 
 
-    @Column
-    BigDecimal bidAmount;
+//    @Column
+//    BigDecimal bidAmount;
 
 
     /**
@@ -59,12 +60,12 @@ public class Project {
 
 
     @JoinColumn(name = "createUserId", referencedColumnName = "id", nullable = false, updatable = false)
-    @OneToOne(optional = false, targetEntity = User.class)
+    @ManyToOne(optional = false, targetEntity = User.class)
     protected User createBy;
 
 
     @JoinColumn(name = "updateUserId", referencedColumnName = "id", nullable = false, updatable = false)
-    @OneToOne(optional = false, targetEntity = User.class)
+    @ManyToOne(optional = false, targetEntity = User.class)
     protected User updateBy;
 
     // 备注
@@ -87,8 +88,19 @@ public class Project {
 
 
     public Project() {
-
     }
 
+
+    public Project(String projectName,String projectDesc,String startDate,String endDate,User user){
+        this.projectName = projectName;
+        this.projectDesc = projectDesc;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.createBy = user;
+        this.updateBy = user;
+        this.createDate = new Date();
+        this.updateDate = new Date();
+        this.state = "1";
+    }
 
 }
