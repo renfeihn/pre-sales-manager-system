@@ -4,141 +4,149 @@ import {getActivities, getNotice, getFakeList} from './mock/api';
 import {getFakeChartData} from './mock/chart';
 import {getProfileBasicData} from './mock/profile';
 import {getProfileAdvancedData} from './mock/profile';
+import {getDepartment} from './mock/data';
 import {getNotices} from './mock/notices';
 import {format, delay} from 'roadhog-api-doc';
 
 // 是否禁用代理
 const noProxy = process.env.NO_PROXY === 'true';
-const apiurl = "http://localhost:8081";
+// const noProxy = true;
+
+const apiUrl = "http://localhost:8081";
 
 // 代码中会兼容本地 service mock 以及部署站点的静态数据
 const proxy = {
-    // 支持值为 Object 和 Array
-    'GET /api/currentUser': {
-        $desc: '获取当前用户接口',
-        $params: {
-            pageSize: {
-                desc: '分页',
-                exp: 2,
-            },
-        },
-        $body: {
-            name: '曲丽丽',
-            avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
-            userid: '00000001',
-            notifyCount: 6,
-        },
+  // 支持值为 Object 和 Array
+  'GET /api/currentUser': {
+    $desc: '获取当前用户接口',
+    $params: {
+      pageSize: {
+        desc: '分页',
+        exp: 2,
+      },
     },
-    // GET POST 可省略
-    'GET /api/users': [
-        {
-            key: '1',
-            name: 'John Brown',
-            age: 32,
-            address: 'New York No. 1 Lake Park',
-        },
-        {
-            key: '2',
-            name: 'Jim Green',
-            age: 42,
-            address: 'London No. 1 Lake Park',
-        },
-        {
-            key: '3',
-            name: 'Joe Black',
-            age: 32,
-            address: 'Sidney No. 1 Lake Park',
-        },
-    ],
-    'GET /api/project/notice': getNotice,
-    'GET /api/activities': getActivities,
-    'GET /api/rule': getRule,
-    'POST /api/rule': {
-        $params: {
-            pageSize: {
-                desc: '分页',
-                exp: 2,
-            },
-        },
-        $body: postRule,
+    $body: {
+      name: '曲丽丽',
+      avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
+      userid: '00000001',
+      notifyCount: 0,
     },
-    'POST /api/forms': (req, res) => {
-        res.send({message: 'Ok'});
+  },
+  // GET POST 可省略
+  'GET /api/users': [
+    {
+      key: '1',
+      name: 'John Brown',
+      age: 32,
+      address: 'New York No. 1 Lake Park',
     },
-    'GET /api/tags': mockjs.mock({
-        'list|100': [{name: '@city', 'value|1-100': 150, 'type|0-2': 1}],
-    }),
-    'GET /api/fake_list': getFakeList,
-    'GET /api/fake_chart_data': getFakeChartData,
-    'GET /api/profile/basic': getProfileBasicData,
-    'GET /api/profile/advanced': getProfileAdvancedData,
-    'POST /api/login/account': (req, res) => {
-        const {password, username, type} = req.body;
-        if (password === '888888' && username === 'admin') {
-            res.send({
-                status: 'ok',
-                type,
-                currentAuthority: 'admin',
-            });
-            return;
-        }
-        if (password === '123456' && userName === 'user') {
-            res.send({
-                status: 'ok',
-                type,
-                currentAuthority: 'user',
-            });
-            return;
-        }
-        res.send({
-            status: 'error',
-            type,
-            currentAuthority: 'guest',
-        });
+    {
+      key: '2',
+      name: 'Jim Green',
+      age: 42,
+      address: 'London No. 1 Lake Park',
     },
-    'POST /api/register': (req, res) => {
-        res.send({status: 'ok', currentAuthority: 'user'});
+    {
+      key: '3',
+      name: 'Joe Black',
+      age: 32,
+      address: 'Sidney No. 1 Lake Park',
     },
-    'GET /api/notices': getNotices,
-    'GET /api/500': (req, res) => {
-        res.status(500).send({
-            timestamp: 1513932555104,
-            status: 500,
-            error: 'error',
-            message: 'error',
-            path: '/base/category/list',
-        });
+  ],
+  'GET /api/project/notice': getNotice,
+  'GET /api/activities': getActivities,
+  'GET /api/rule': getRule,
+  'POST /api/rule': {
+    $params: {
+      pageSize: {
+        desc: '分页',
+        exp: 2,
+      },
     },
-    'GET /api/404': (req, res) => {
-        res.status(404).send({
-            timestamp: 1513932643431,
-            status: 404,
-            error: 'Not Found',
-            message: 'No message available',
-            path: '/base/category/list/2121212',
-        });
-    },
-    'GET /api/403': (req, res) => {
-        res.status(403).send({
-            timestamp: 1513932555104,
-            status: 403,
-            error: 'Unauthorized',
-            message: 'Unauthorized',
-            path: '/base/category/list',
-        });
-    },
-    'GET /api/401': (req, res) => {
-        res.status(401).send({
-            timestamp: 1513932555104,
-            status: 401,
-            error: 'Unauthorized',
-            message: 'Unauthorized',
-            path: '/base/category/list',
-        });
-    },
+    $body: postRule,
+  },
+  'POST /api/forms': (req, res) => {
+    res.send({message: 'Ok'});
+  },
+  'POST /api/project': (req, res) => {
+    res.send({message: 'Ok'});
+  },
+  'GET /api/tags': mockjs.mock({
+    'list|100': [{name: '@city', 'value|1-100': 150, 'type|0-2': 1}],
+  }),
+  'GET /api/fake_list': getFakeList,
+  'GET /api/fake_chart_data': getFakeChartData,
+  'GET /api/profile/basic': getProfileBasicData,
+  'GET /api/profile/advanced': getProfileAdvancedData,
+  'GET /api/data/getData': getDepartment,
+
+  'POST /api/login/account': (req, res) => {
+    const {password, username, type} = req.body;
+    if (password === '888888' && username === 'admin') {
+      res.send({
+        status: 'ok',
+        type,
+        currentAuthority: 'admin',
+      });
+      return;
+    }
+    if (password === '123456' && username === 'user') {
+      res.send({
+        status: 'ok',
+        type,
+        currentAuthority: 'user',
+      });
+      return;
+    }
+    res.send({
+      status: 'error',
+      type,
+      currentAuthority: 'guest',
+    });
+  },
+  'POST /api/register': (req, res) => {
+    res.send({status: 'ok', currentAuthority: 'user'});
+  },
+  'GET /api/notices': getNotices,
+  'GET /api/500': (req, res) => {
+    res.status(500).send({
+      timestamp: 1513932555104,
+      status: 500,
+      error: 'error',
+      message: 'error',
+      path: '/base/category/list',
+    });
+  },
+  'GET /api/404': (req, res) => {
+    res.status(404).send({
+      timestamp: 1513932643431,
+      status: 404,
+      error: 'Not Found',
+      message: 'No message available',
+      path: '/base/category/list/2121212',
+    });
+  },
+  'GET /api/403': (req, res) => {
+    res.status(403).send({
+      timestamp: 1513932555104,
+      status: 403,
+      error: 'Unauthorized',
+      message: 'Unauthorized',
+      path: '/base/category/list',
+    });
+  },
+  'GET /api/401': (req, res) => {
+    res.status(401).send({
+      timestamp: 1513932555104,
+      status: 401,
+      error: 'Unauthorized',
+      message: 'Unauthorized',
+      path: '/base/category/list',
+    });
+  },
 };
 
 export default (noProxy ? {
-        'GET /api/(.*)': apiurl + '/api/',
-        'POST /api/(.*)': apiurl + '/api/',
-    } : delay(proxy, 1000));
+    'GET /api/(.*)': apiUrl + '/api/',
+    'POST /api/(.*)': apiUrl + '/api/',
+  } : delay(proxy, 1000));

@@ -118,7 +118,7 @@ export default class GlobalHeader extends PureComponent {
           </Tooltip>
           <NoticeIcon
             className={styles.action}
-            count={currentUser.notifyCount}
+            count={0}
             onItemClick={(item, tabProps) => {
               console.log(item, tabProps); // eslint-disable-line
             }}

@@ -77,3 +77,17 @@ export async function fakeRegister(params) {
 export async function queryNotices() {
   return request('/api/notices');
 }
+
+// 获取部门数据
+export async function getDepartment() {
+  return request('/api/data/getDepartment');
+}
+
+// 提交项目信息
+export async function projectSubmitForm(params) {
+  return request('/api/project', {
+    method: 'POST',
+    body: params,
+  });
+}
+
