@@ -45,9 +45,9 @@ export default class TableForm extends PureComponent {
     const newData = this.state.data.map(item => ({ ...item }));
     newData.push({
       key: `NEW_TEMP_ID_${this.index}`,
-      workId: '',
+      jobTittle: '',
       name: '',
-      department: '',
+      departmentName: '',
       editable: true,
       isNew: true,
     });
@@ -78,7 +78,7 @@ export default class TableForm extends PureComponent {
         return;
       }
       const target = this.getRowByKey(key) || {};
-      if (!target.workId || !target.name || !target.department) {
+      if (!target.jobTittle || !target.name || !target.departmentName) {
         message.error('请填写完整成员信息。');
         e.target.focus();
         this.setState({
@@ -130,18 +130,18 @@ export default class TableForm extends PureComponent {
         },
       },
       {
-        title: '工号',
-        dataIndex: 'workId',
-        key: 'workId',
+        title: '级别',
+        dataIndex: 'jobTittle',
+        key: 'jobTittle',
         width: '20%',
         render: (text, record) => {
           if (record.editable) {
             return (
               <Input
                 value={text}
-                onChange={e => this.handleFieldChange(e, 'workId', record.key)}
+                onChange={e => this.handleFieldChange(e, 'jobTittle', record.key)}
                 onKeyPress={e => this.handleKeyPress(e, record.key)}
-                placeholder="工号"
+                placeholder="级别"
               />
             );
           }
@@ -150,15 +150,15 @@ export default class TableForm extends PureComponent {
       },
       {
         title: '所属部门',
-        dataIndex: 'department',
-        key: 'department',
+        dataIndex: 'departmentName',
+        key: 'departmentName',
         width: '40%',
         render: (text, record) => {
           if (record.editable) {
             return (
               <Input
                 value={text}
-                onChange={e => this.handleFieldChange(e, 'department', record.key)}
+                onChange={e => this.handleFieldChange(e, 'departmentName', record.key)}
                 onKeyPress={e => this.handleKeyPress(e, record.key)}
                 placeholder="所属部门"
               />

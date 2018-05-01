@@ -20,9 +20,9 @@ function isPromise(obj) {
  */
 const checkPermissions = (authority, currentAuthority, target, Exception) => {
 
-    console.log('authority: ' + authority);
-    console.log('currentAuthority: ' + currentAuthority);
-    console.log('target: ' + target);
+    // console.log('authority: ' + authority);
+    // console.log('currentAuthority: ' + currentAuthority);
+    // console.log('target: ' + target);
   // 没有判定权限.默认查看所有
   // Retirement authority, return target;
   if (!authority) {

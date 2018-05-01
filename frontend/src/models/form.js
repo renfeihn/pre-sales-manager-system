@@ -1,6 +1,7 @@
-import { routerRedux } from 'dva/router';
-import { message } from 'antd';
-import { fakeSubmitForm } from '../services/api';
+import {routerRedux} from 'dva/router';
+import {message} from 'antd';
+import {fakeSubmitForm} from '../services/api';
+import {projectSubmitForm} from '../services/api';
 
 export default {
   namespace: 'form',
@@ -15,11 +16,15 @@ export default {
   },
 
   effects: {
-    *submitRegularForm({ payload }, { call }) {
+    *submitRegularForm({payload}, {call}) {
       yield call(fakeSubmitForm, payload);
       message.success('提交成功');
     },
-    *submitStepForm({ payload }, { call, put }) {
+    *submitProjectForm({payload}, {call}) {
+      yield call(projectSubmitForm, payload);
+      message.success('提交成功');
+    },
+    *submitStepForm({payload}, {call, put}) {
       yield call(fakeSubmitForm, payload);
       yield put({
         type: 'saveStepFormData',
@@ -27,14 +32,14 @@ export default {
       });
       yield put(routerRedux.push('/form/step-form/result'));
     },
-    *submitAdvancedForm({ payload }, { call }) {
+    *submitAdvancedForm({payload}, {call}) {
       yield call(fakeSubmitForm, payload);
       message.success('提交成功');
     },
   },
 
   reducers: {
-    saveStepFormData(state, { payload }) {
+    saveStepFormData(state, {payload}) {
       return {
         ...state,
         step: {
