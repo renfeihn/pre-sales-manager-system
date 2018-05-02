@@ -21,10 +21,6 @@ import styles from './style.less';
 import FooterToolbar from 'components/FooterToolbar';
 import TableForm from './TableForm';
 
-// import { getDepartment } from '../../services/api';
-import {getDepartment} from '../../../mock/data';
-
-
 const FormItem = Form.Item;
 const {Option} = Select;
 const {RangePicker} = DatePicker;
@@ -33,33 +29,19 @@ const {TextArea} = Input;
 
 const tableData = [];
 
-// const department = getDepartment.department;
-//
-// let departmentOption = [];
-// for (let i = 0; i < department.length; i++) {
-//   departmentOption.push(<Option key={department[i].name}> {department[i].name} </Option>);
-// }
-
-const productLine = getDepartment.productLine;
-
-let productLineOption = [];
-for (let i = 0; i < productLine.length; i++) {
-  productLineOption.push(<Option key={productLine[i].id}> {productLine[i].name} </Option>);
-}
-
-const project = getDepartment.project;
-
-let projectOption = [];
-for (let i = 0; i < project.length; i++) {
-  projectOption.push(<Option key={project[i].name}> {project[i].name} </Option>);
-}
-
-
-@connect(({loading}) => ({
-  submitting: loading.effects['form/submitProjectForm'],
-}))
 @Form.create()
+@connect(({param,loading}) => ({
+  param,
+  loading: loading.effects['param/fectchParam'],
+}))
 export default class BasicForms extends PureComponent {
+  componentDidMount() {
+    window.addEventListener('resize', this.resizeFooterToolbar);
+    this.props.dispatch({
+      type: 'param/fectchParam',
+    });
+  }
+
   state = {
     width: '100%',
   };
@@ -77,9 +59,7 @@ export default class BasicForms extends PureComponent {
     });
   };
 
-  componentDidMount() {
-    window.addEventListener('resize', this.resizeFooterToolbar);
-  }
+  
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.resizeFooterToolbar);
@@ -94,16 +74,14 @@ export default class BasicForms extends PureComponent {
   };
 
   render() {
-    const {submitting} = this.props;
+    const {param,submitting} = this.props;
     const {getFieldDecorator, getFieldValue} = this.props.form;
 
+    const {department,product,project} = param;
 
-    const department = getDepartment.department;
-
-    let departmentOption = [];
-    for (let i = 0; i < department.length; i++) {
-      departmentOption.push(<Option key={department[i].id}> {department[i].name} </Option>);
-    }
+    const productOption = product.map(d => <Option key={d.id}>{d.name}</Option>);
+    const projectOption = project.map(d => <Option key={d.id}>{d.name}</Option>);
+    const departmentOption = department.map(d => <Option key={d.id}>{d.name}</Option>);
 
     const formItemLayout = {
       labelCol: {
@@ -155,7 +133,7 @@ export default class BasicForms extends PureComponent {
                   },
                 ],
               })(<Select placeholder="请选择产品线">
-                  {productLineOption}
+                  {productOption}
                 </Select>
               )}
             </FormItem>

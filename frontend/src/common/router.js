@@ -107,7 +107,7 @@ export const getRouterData = app => {
     '/form/basic-form'
     :
     {
-        component: dynamicWrapper(app, ['form'], () =>
+        component: dynamicWrapper(app, ['form','param'], () =>
         import
         ('../routes/Forms/BasicForm')
     ),

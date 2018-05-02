@@ -4,7 +4,7 @@ import {getActivities, getNotice, getFakeList} from './mock/api';
 import {getFakeChartData} from './mock/chart';
 import {getProfileBasicData} from './mock/profile';
 import {getProfileAdvancedData} from './mock/profile';
-import {getDepartment} from './mock/data';
+import {getParam} from './mock/param';
 import {getNotices} from './mock/notices';
 import {format, delay} from 'roadhog-api-doc';
 
@@ -78,8 +78,7 @@ const proxy = {
   'GET /api/fake_chart_data': getFakeChartData,
   'GET /api/profile/basic': getProfileBasicData,
   'GET /api/profile/advanced': getProfileAdvancedData,
-  'GET /api/data/getData': getDepartment,
-
+  'GET /api/param/getParam': getParam,
   'POST /api/login/account': (req, res) => {
     const {password, username, type} = req.body;
     if (password === '888888' && username === 'admin') {
