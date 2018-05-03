@@ -12,7 +12,7 @@ public class SupporterFactory {
 
     public Supporter create(SupporterVo SupporterVo, Project project, User user) {
 
-        Supporter Supporter = new Supporter(SupporterVo.getName(), SupporterVo.getJobTittle(),
+        Supporter Supporter = new Supporter(SupporterVo.getName(), SupporterVo.getJobTitle(),
                 SupporterVo.getDepartmentName(), project, user);
 
         return Supporter;

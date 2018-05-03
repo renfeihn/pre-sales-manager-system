@@ -32,7 +32,7 @@ public class Supporter {
 
     // 支持人员岗位
     @Column
-    String jobTittle;
+    String jobTitle;
 
     @Column
     String departmentName;
@@ -75,9 +75,9 @@ public class Supporter {
     }
 
 
-    public Supporter(String name, String jobTittle, String departmentName,Project project ,User user) {
+    public Supporter(String name, String jobTitle, String departmentName,Project project ,User user) {
         this.name = name;
-        this.jobTittle = jobTittle;
+        this.jobTitle = jobTitle;
         this.departmentName = departmentName;
         this.project = project;
         this.createBy = user;

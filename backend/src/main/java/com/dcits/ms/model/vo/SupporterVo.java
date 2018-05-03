@@ -22,7 +22,7 @@ public class SupporterVo {
     String name;
 
     // 支持人员岗位
-    String jobTittle;
+    String jobTitle;
 
 
     String departmentName;
