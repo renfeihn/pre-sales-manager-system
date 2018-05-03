@@ -15,6 +15,7 @@ import {
   Row,
   TimePicker,
   Popover,
+  Rate,
 } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import styles from './style.less';
@@ -27,18 +28,23 @@ const {RangePicker} = DatePicker;
 const {TextArea} = Input;
 
 
-const tableData = [];
+//const tableData = [];
 
 @Form.create()
-@connect(({param,loading}) => ({
+@connect(({param,user,loading}) => ({
   param,
+  user,
   loading: loading.effects['param/fectchParam'],
+  userloading: loading.effects['user/fetchList'],
 }))
 export default class BasicForms extends PureComponent {
   componentDidMount() {
     window.addEventListener('resize', this.resizeFooterToolbar);
     this.props.dispatch({
       type: 'param/fectchParam',
+    });
+    this.props.dispatch({
+      type: 'user/fetchList',
     });
   }
 
@@ -74,10 +80,12 @@ export default class BasicForms extends PureComponent {
   };
 
   render() {
-    const {param,submitting} = this.props;
+    const {param,user,submitting} = this.props;
     const {getFieldDecorator, getFieldValue} = this.props.form;
 
     const {department,product,project} = param;
+    const tableData=[];
+    const listData = user.list;
 
     const productOption = product.map(d => <Option key={d.id}>{d.name}</Option>);
     const projectOption = project.map(d => <Option key={d.id}>{d.name}</Option>);
@@ -104,8 +112,8 @@ export default class BasicForms extends PureComponent {
 
     return (
       <PageHeaderLayout
-        title="项目申请"
-        content="请填写项目基本信息"
+        //title="项目申请"
+        //content="请填写项目基本信息"
       >
         <Form onSubmit={this.handleSubmit} hideRequiredMark style={{marginTop: 8}}>
 
@@ -183,12 +191,13 @@ export default class BasicForms extends PureComponent {
               {...formItemLayout}
               label={
                 <span>
-                        中标意向比<em className={styles.optional}>（选填）</em>
+                        中标率<em className={styles.optional}></em>
                         </span>
               }
             >
-              {getFieldDecorator('weight')(<InputNumber placeholder="请输入" min={0} max={100}/>)}
-              <span>%</span>
+              {/*getFieldDecorator('weight')(<InputNumber placeholder="请输入" min={0} max={100}/>)*/}              {/*<span>%</span>*/}
+              {getFieldDecorator('rate')(<Rate allowHalf defaultValue={2.5}/>)}
+
             </FormItem>
 
           </Card>

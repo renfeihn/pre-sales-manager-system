@@ -1,15 +1,37 @@
 import React, { PureComponent, Fragment } from 'react';
-import { Table, Button, Input, message, Popconfirm, Divider } from 'antd';
+import { Table, Button, Input, AutoComplete, message, Popconfirm, Divider } from 'antd';
 import styles from './style.less';
+import { connect } from 'dva';
+import * as userService from '../../services/user';
 
-export default class TableForm extends PureComponent {
+export default class TableForm extends PureComponent {  
   constructor(props) {
     super(props);
 
     this.state = {
       data: props.value,
       loading: false,
+      dataSource:[],
+      listSource:[],
     };
+    
+  }
+  
+  componentDidMount() {
+    const listData=[]
+    userService.queryList().then((res) => {
+      res.forEach((item, index) => {
+        listData.push(item.name);
+      })
+      this.setState({
+        dataSource: listData,
+        listSource: res,
+      });
+    })
+
+
+//    const { user, submitting } = this.props;
+    
   }
   componentWillReceiveProps(nextProps) {
     if ('value' in nextProps) {
@@ -107,7 +129,30 @@ export default class TableForm extends PureComponent {
     this.setState({ data: newData });
     this.clickedCancel = false;
   }
+
+  /**
+   * 选中触发事件
+   * @param {索引} key 
+   * @param {值} value 
+   */
+  handleSelect(key,value) {
+    const newData = this.state.listSource;
+    const target = newData.filter(item => item.name === value)[0];
+    //更改相同索引数据
+    this.state.data.forEach(
+      function selectData(item) {
+        if(item.key==key){
+          item.name=target.name
+          item.jobTitle = target.jobTitle
+          item.departmentName = target.departmentName
+        }
+      }
+    )
+    //刷新父组件数据
+    this.props.onChange(this.state.data);
+  }
   render() {
+
     const columns = [
       {
         title: '姓名',
@@ -116,6 +161,7 @@ export default class TableForm extends PureComponent {
         width: '20%',
         render: (text, record) => {
           if (record.editable) {
+            /*
             return (
               <Input
                 value={text}
@@ -125,21 +171,30 @@ export default class TableForm extends PureComponent {
                 placeholder="姓名"
               />
             );
+            */
+            return (
+            <AutoComplete
+              dataSource={this.state.dataSource}
+              placeholder="请选择姓名"
+                onSelect={this.handleSelect.bind(this,record.key)}
+              filterOption={(inputValue, option) => option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
+            />
+            )
           }
           return text;
         },
       },
       {
         title: '级别',
-        dataIndex: 'jobTittle',
-        key: 'jobTittle',
+        dataIndex: 'jobTitle',
+        key: 'jobTitle',
         width: '20%',
         render: (text, record) => {
           if (record.editable) {
             return (
               <Input
                 value={text}
-                onChange={e => this.handleFieldChange(e, 'jobTittle', record.key)}
+                onChange={e => this.handleFieldChange(e, 'jobTitle', record.key)}
                 onKeyPress={e => this.handleKeyPress(e, record.key)}
                 placeholder="级别"
               />

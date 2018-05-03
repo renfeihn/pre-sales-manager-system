@@ -1,4 +1,4 @@
-import { query as queryUsers, queryCurrent } from '../services/user';
+import { query as queryUsers, queryList,queryCurrent } from '../services/user';
 
 export default {
   namespace: 'user',
@@ -16,6 +16,13 @@ export default {
         payload: response,
       });
     },
+    *fetchList(_, { call, put }) {
+      const response = yield call(queryList);
+      yield put({
+        type: 'lists',
+        payload: response,
+      });
+    },
     *fetchCurrent(_, { call, put }) {
       const response = yield call(queryCurrent);
       yield put({
@@ -26,6 +33,12 @@ export default {
   },
 
   reducers: {
+    lists(state, action) {
+      return {
+        ...state,
+        list: action.payload,
+      };
+    },
     save(state, action) {
       return {
         ...state,

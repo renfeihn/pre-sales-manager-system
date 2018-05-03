@@ -5,6 +5,7 @@ import {getFakeChartData} from './mock/chart';
 import {getProfileBasicData} from './mock/profile';
 import {getProfileAdvancedData} from './mock/profile';
 import {getParam} from './mock/param';
+import {getUser} from './mock/user';
 import {getNotices} from './mock/notices';
 import {format, delay} from 'roadhog-api-doc';
 
@@ -53,6 +54,7 @@ const proxy = {
       address: 'Sidney No. 1 Lake Park',
     },
   ],
+  'GET /api/userList': getUser,
   'GET /api/project/notice': getNotice,
   'GET /api/activities': getActivities,
   'GET /api/rule': getRule,
