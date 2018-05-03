@@ -201,7 +201,7 @@ export default class BasicForms extends PureComponent {
 
           </Card>
 
-          <Card title="人员申请" bordered={false}>
+          <Card title="支持人员" bordered={false}>
             {getFieldDecorator('supporters', {
               initialValue: tableData,
             })(<TableForm />)}
