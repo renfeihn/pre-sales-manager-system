@@ -13,7 +13,9 @@ import java.util.List;
 @Getter
 public class ProjectVo {
 
+    Integer id;
 
+    Integer baseProjectId;
 
     String projectName;
 
@@ -23,13 +25,21 @@ public class ProjectVo {
 
     Integer departmentId;
 
+    String departmentName;
+
     Integer productId;
+
+    String productName;
 
     double weight;
 
     String remarks;
 
     List<SupporterVo> supporters;
+
+    String logo;
+
+    String createDate;
 
 
 }

@@ -48,4 +48,11 @@ public class ProjectController {
         return new HttpEntity(project);
     }
 
+    @RequestMapping(value = "/project/notice", method = RequestMethod.GET)
+    public HttpEntity<List> getNotice() {
+        List list = projectService.findByNum(6);
+        return new HttpEntity(list);
+    }
+
+
 }

@@ -25,6 +25,9 @@ public class BaseProjectService {
         baseProjectRepository.save(baseProject);
     }
 
+    public BaseProject findById(Integer id) {
+        return baseProjectRepository.findOne(id);
+    }
 
 
     public List<BaseProject> findAll() {

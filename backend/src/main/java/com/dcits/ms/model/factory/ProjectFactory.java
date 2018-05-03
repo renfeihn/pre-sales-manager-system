@@ -1,10 +1,8 @@
 package com.dcits.ms.model.factory;
 
-import com.dcits.ms.model.Department;
-import com.dcits.ms.model.Product;
-import com.dcits.ms.model.Project;
-import com.dcits.ms.model.User;
+import com.dcits.ms.model.*;
 import com.dcits.ms.model.vo.ProjectVo;
+import com.dcits.ms.service.BaseProjectService;
 import com.dcits.ms.service.DepartmentService;
 import com.dcits.ms.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +17,17 @@ public class ProjectFactory {
     DepartmentService departmentService;
     @Autowired
     ProductService productService;
+    @Autowired
+    BaseProjectService baseProjectService;
 
     public Project create(ProjectVo projectVo, User user) {
 
-        Project project = new Project(projectVo.getProjectName(), projectVo.getProjectDesc(),
+        Project project = new Project(projectVo.getProjectDesc(),
                 projectVo.getDate()[0], projectVo.getDate()[1], user);
+
+        BaseProject baseProject = baseProjectService.findById(projectVo.getBaseProjectId());
+
+        project.setBaseProject(baseProject);
 
         Integer departmentId = projectVo.getDepartmentId();
         Department department = departmentService.fingById(departmentId);

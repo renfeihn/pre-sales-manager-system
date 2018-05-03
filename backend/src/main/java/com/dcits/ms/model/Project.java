@@ -25,8 +25,9 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Integer id;
 
-    @Column(nullable = false)
-    String projectName;
+    @JoinColumn(name = "base_project_id", referencedColumnName = "id", nullable = false, updatable = false)
+    @ManyToOne(optional = false, targetEntity = BaseProject.class)
+    BaseProject baseProject;
 
     @Column(nullable = false)
     String projectDesc;
@@ -91,8 +92,7 @@ public class Project {
     }
 
 
-    public Project(String projectName,String projectDesc,String startDate,String endDate,User user){
-        this.projectName = projectName;
+    public Project(String projectDesc,String startDate,String endDate,User user){
         this.projectDesc = projectDesc;
         this.startDate = startDate;
         this.endDate = endDate;
