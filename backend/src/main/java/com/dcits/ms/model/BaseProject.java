@@ -7,17 +7,16 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * 部门（事业部）信息表
+ * 基础项目信息表
  */
 @Entity
 @Setter
 @Getter
-@Table(name = "ms_department")
-public class Department {
+@Table(name = "ms_base_project")
+public class BaseProject {
 
 
     @Id
@@ -27,15 +26,9 @@ public class Department {
     @Column(nullable = false)
     String name;
 
+    @Column
+    String projectDesc;
 
-//    @JoinColumn(name = "createUserId", referencedColumnName = "id", updatable = false)
-//    @ManyToOne(optional = false, targetEntity = User.class)
-//    protected User createBy;
-//
-//
-//    @JoinColumn(name = "updateUserId", referencedColumnName = "id", updatable = false)
-//    @ManyToOne(optional = false, targetEntity = User.class)
-//    protected User updateBy;
 
     // 备注
     @Column
@@ -56,11 +49,13 @@ public class Department {
     protected String delFlag;
 
 
-    public Department() {
+    public BaseProject() {
     }
 
-    public Department(String name) {
+
+    public BaseProject(String name, String projectDesc){
         this.name = name;
+        this.projectDesc = projectDesc;
     }
 
 }

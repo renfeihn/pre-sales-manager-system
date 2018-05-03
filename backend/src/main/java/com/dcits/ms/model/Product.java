@@ -25,7 +25,7 @@ public class Product {
     Integer id;
 
     @Column(nullable = false)
-    String prodName;
+    String name;
 
 
 //    @JoinColumn(name = "createUserId", referencedColumnName = "id", nullable = false, updatable = false)
@@ -59,8 +59,8 @@ public class Product {
     public Product() {
     }
 
-    public Product(String prodName){
-        this.prodName = prodName;
+    public Product(String name){
+        this.name = name;
     }
 
 }

@@ -59,14 +59,14 @@ public class Project {
     String state;
 
 
-    @JoinColumn(name = "createUserId", referencedColumnName = "id", nullable = false, updatable = false)
-    @ManyToOne(optional = false, targetEntity = User.class)
-    protected User createBy;
-
-
-    @JoinColumn(name = "updateUserId", referencedColumnName = "id", nullable = false, updatable = false)
-    @ManyToOne(optional = false, targetEntity = User.class)
-    protected User updateBy;
+//    @JoinColumn(name = "createUserId", referencedColumnName = "id", nullable = false, updatable = false)
+//    @ManyToOne(optional = false, targetEntity = User.class)
+//    protected User createBy;
+//
+//
+//    @JoinColumn(name = "updateUserId", referencedColumnName = "id", nullable = false, updatable = false)
+//    @ManyToOne(optional = false, targetEntity = User.class)
+//    protected User updateBy;
 
     // 备注
     @Column
@@ -96,8 +96,8 @@ public class Project {
         this.projectDesc = projectDesc;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.createBy = user;
-        this.updateBy = user;
+//        this.createBy = user;
+//        this.updateBy = user;
         this.createDate = new Date();
         this.updateDate = new Date();
         this.state = "1";

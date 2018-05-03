@@ -1,14 +1,13 @@
 package com.dcits.ms.service;
 
-import com.dcits.ms.model.Department;
 import com.dcits.ms.model.Product;
 import com.dcits.ms.model.User;
-import com.dcits.ms.model.factory.DepartmentFactory;
 import com.dcits.ms.model.factory.ProductFactory;
-import com.dcits.ms.repository.DepartmentRepository;
 import com.dcits.ms.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * 产品线SERVICE
@@ -22,7 +21,7 @@ public class ProductService {
     ProductFactory productFactory;
 
 
-    public void create(String prodName, User user) {
+    public void create(String prodName) {
         Product product = productFactory.create(prodName);
         productRepository.save(product);
     }
@@ -31,8 +30,11 @@ public class ProductService {
         productRepository.deleteAll();
     }
 
+    public List<Product> findAll() {
+        return (List) productRepository.findAll();
+    }
 
-    public Product fingById(Integer id){
+    public Product fingById(Integer id) {
         return productRepository.findOne(id);
     }
 

@@ -31,12 +31,14 @@ public class User{
     // 角色
     @Column(nullable = false)
     String role;
+
     // 部门(事业部)
-    @Column
-    String department;
+    @JoinColumn(name = "department_id", referencedColumnName = "id", nullable = false, updatable = false)
+    @ManyToOne(optional = false, targetEntity = Department.class)
+    Department department;
     // 职位
     @Column
-    String position;
+    String jobTitle;
     // 中文姓名
     @Column
     String zhName;
@@ -87,13 +89,13 @@ public class User{
     }
 
     public User(String username, String password, String sec, String role,
-                String department, String position, String zhName) {
+                Department department, String jobTitle, String zhName) {
         this.username = username;
         this.password = password;
         this.sec = sec;
         this.role = role;
         this.department = department;
-        this.position = position;
+        this.jobTitle = jobTitle;
         this.zhName = zhName;
     }
 }

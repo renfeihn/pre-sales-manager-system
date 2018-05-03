@@ -31,7 +31,7 @@ const {TextArea} = Input;
 //const tableData = [];
 
 @Form.create()
-@connect(({param,user,loading}) => ({
+@connect(({param, user, loading}) => ({
   param,
   user,
   loading: loading.effects['param/fectchParam'],
@@ -65,7 +65,6 @@ export default class BasicForms extends PureComponent {
     });
   };
 
-  
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.resizeFooterToolbar);
@@ -80,11 +79,11 @@ export default class BasicForms extends PureComponent {
   };
 
   render() {
-    const {param,user,submitting} = this.props;
+    const {param, user, submitting} = this.props;
     const {getFieldDecorator, getFieldValue} = this.props.form;
 
-    const {department,product,project} = param;
-    const tableData=[];
+    const {department, product, project} = param;
+    const tableData = [];
     const listData = user.list;
 
     const productOption = product.map(d => <Option key={d.id}>{d.name}</Option>);
@@ -195,7 +194,7 @@ export default class BasicForms extends PureComponent {
                         </span>
               }
             >
-              {/*getFieldDecorator('weight')(<InputNumber placeholder="请输入" min={0} max={100}/>)*/}              {/*<span>%</span>*/}
+              {/*getFieldDecorator('weight')(<InputNumber placeholder="请输入" min={0} max={100}/>)*/} {/*<span>%</span>*/}
               {getFieldDecorator('rate')(<Rate allowHalf defaultValue={2.5}/>)}
 
             </FormItem>

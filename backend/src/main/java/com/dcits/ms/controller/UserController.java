@@ -1,7 +1,11 @@
 package com.dcits.ms.controller;
 
+import com.dcits.ms.model.User;
+import com.dcits.ms.model.vo.UserVo;
+import com.dcits.ms.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -24,6 +30,10 @@ public class UserController {
 
     static final String USERNAME = "username";
     static final String AUTHORIZATIONS = "permissions";
+
+    @Autowired
+    UserService userService;
+
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public HttpEntity<Map> user(HttpServletRequest request) {
@@ -57,6 +67,22 @@ public class UserController {
         return new HttpEntity(result);
     }
 
+
+    @RequestMapping(value = "/userList", method = RequestMethod.GET)
+    public HttpEntity<List> userList(HttpServletRequest request) {
+        List<User> list = userService.findAll();
+        List<UserVo> result = new ArrayList();
+        if (null != list) {
+            UserVo userVo = null;
+            for (User u : list) {
+                userVo = new UserVo(u.getId(), u.getUsername(),
+                        u.getDepartment().getName(), u.getJobTitle());
+                result.add(userVo);
+            }
+        }
+
+        return new HttpEntity(result);
+    }
 
     @RequestMapping(value = "login/account", method = RequestMethod.POST)
     public HttpEntity<Map> login(HttpServletRequest request) {

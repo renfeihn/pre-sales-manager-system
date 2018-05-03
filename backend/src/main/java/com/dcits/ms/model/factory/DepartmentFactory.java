@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class DepartmentFactory {
 
-    public Department create(String depName, User user) {
-        return new Department(depName, user);
+    public Department create(String name) {
+        return new Department(name);
     }
 
 }

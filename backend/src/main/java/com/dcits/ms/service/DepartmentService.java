@@ -30,8 +30,8 @@ public class DepartmentService {
     DepartmentFactory departmentFactory;
 
 
-    public void create(String depName, User user) {
-        Department department = departmentFactory.create(depName, user);
+    public void create(String name) {
+        Department department = departmentFactory.create(name);
         departmentRepository.save(department);
     }
 
@@ -39,12 +39,12 @@ public class DepartmentService {
         departmentRepository.deleteAll();
     }
 
-    public Department fingById(Integer id){
+    public Department fingById(Integer id) {
         return departmentRepository.findOne(id);
     }
 
 
-    public List<Project> findAll() {
+    public List<Department> findAll() {
         return (List) departmentRepository.findAll();
     }
 

@@ -1,5 +1,6 @@
 package com.dcits.ms.service;
 
+import com.dcits.ms.model.Department;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
@@ -12,6 +13,8 @@ import com.dcits.ms.repository.UserRepository;
 import com.dcits.ms.security.jwt.JwtService;
 import com.dcits.ms.support.DateGenerator;
 import com.dcits.ms.support.StringSupport;
+
+import java.util.List;
 
 
 @Component
@@ -31,26 +34,28 @@ public class UserService {
     DateGenerator dateGenerator;
 
 
-    public User create(String username, String password, String role) {
+    public User create(String username, String password, String role,
+                       Department department, String jobTitle, String zhName) {
         String sec = stringSupport.generate();
-        User u = userFactory.create(username, shaPasswordEncoder.encodePassword(password, sec), sec, role);
+        User u = userFactory.create(username, shaPasswordEncoder.encodePassword(password, sec), sec, role, department, jobTitle, zhName);
         return userRepository.save(u);
     }
 
-    public void deleteAll(){
-        userRepository.deleteAll();;
+    public void deleteAll() {
+        userRepository.deleteAll();
+        ;
     }
 
-    public User isLoginValid(String username, String pass)  {
-        if(!StringUtils.hasText(username) || !StringUtils.hasText(pass)) {
+    public User isLoginValid(String username, String pass) {
+        if (!StringUtils.hasText(username) || !StringUtils.hasText(pass)) {
             return null;
         }
         String password = new String(Base64.decodeBase64(pass.getBytes()));
         User u = userRepository.findByUsername(username);
-        if(u == null) {
+        if (u == null) {
             return null;
         }
-        if(!u.getPassword().equals(shaPasswordEncoder.encodePassword(password, u.getSec()))) {
+        if (!u.getPassword().equals(shaPasswordEncoder.encodePassword(password, u.getSec()))) {
             return null;
         }
         return u;
@@ -58,6 +63,10 @@ public class UserService {
 
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    public List<User> findAll() {
+        return (List<User>) userRepository.findAll();
     }
 
     public User createUserToken(String username, String secret) {
@@ -69,7 +78,7 @@ public class UserService {
 
     public User validateUser(String token, String secret) {
         String username = jwtService.getUsername(token, secret);
-        if (username != null ) {
+        if (username != null) {
             User user = userRepository.findByUsername(username);
             if (user != null && token.equals(user.getToken()) && jwtService.isValid(token, secret)) {
                 return user;
