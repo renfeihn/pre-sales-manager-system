@@ -118,7 +118,7 @@ export default class BasicForms extends PureComponent {
 
           <Card bordered={false} className={styles.card}>
             <FormItem {...formItemLayout} label="项目名称">
-              {getFieldDecorator('projectName', {
+              {getFieldDecorator('baseProjectId', {
                 rules: [
                   {
                     required: true,
@@ -195,7 +195,7 @@ export default class BasicForms extends PureComponent {
               }
             >
               {/*getFieldDecorator('weight')(<InputNumber placeholder="请输入" min={0} max={100}/>)*/} {/*<span>%</span>*/}
-              {getFieldDecorator('rate')(<Rate allowHalf defaultValue={2.5}/>)}
+              {getFieldDecorator('bidRatio')(<Rate allowHalf defaultValue={2.5}/>)}
 
             </FormItem>
 
