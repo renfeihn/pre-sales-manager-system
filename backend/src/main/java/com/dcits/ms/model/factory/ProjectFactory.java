@@ -8,6 +8,8 @@ import com.dcits.ms.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+
 
 @Component
 public class ProjectFactory {
@@ -23,7 +25,7 @@ public class ProjectFactory {
     public Project create(ProjectVo projectVo, User user) {
 
         Project project = new Project(projectVo.getProjectDesc(),
-                projectVo.getDate()[0], projectVo.getDate()[1], user);
+                projectVo.getDate()[0], projectVo.getDate()[1], projectVo.getBidRatio(), user);
 
         BaseProject baseProject = baseProjectService.findById(projectVo.getBaseProjectId());
 

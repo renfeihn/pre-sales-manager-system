@@ -4,6 +4,7 @@ package com.dcits.ms.model.vo;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -26,6 +27,8 @@ public class ProjectVo {
     Integer departmentId;
 
     String departmentName;
+
+    BigDecimal bidRatio;
 
     Integer productId;
 

@@ -48,9 +48,9 @@ public class Project {
     @ManyToOne(optional = false, targetEntity = Product.class)
     Product product;
 
-
-//    @Column
-//    BigDecimal bidAmount;
+    // 中标比率
+    @Column
+    BigDecimal bidRatio;
 
 
     /**
@@ -92,15 +92,23 @@ public class Project {
     }
 
 
-    public Project(String projectDesc,String startDate,String endDate,User user){
+    public Project(String projectDesc, String startDate, String endDate,BigDecimal bidRatio, User user) {
         this.projectDesc = projectDesc;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.startDate = subDate(startDate);
+        this.endDate = subDate(endDate);
 //        this.createBy = user;
 //        this.updateBy = user;
+        this.bidRatio = bidRatio;
         this.createDate = new Date();
         this.updateDate = new Date();
         this.state = "1";
+    }
+
+    private String subDate(String dateStr) {
+        if (null != dateStr && dateStr.length() > 10) {
+            dateStr = dateStr.substring(0, 10);
+        }
+        return dateStr;
     }
 
 }
