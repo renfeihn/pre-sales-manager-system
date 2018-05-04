@@ -29,7 +29,7 @@ describe('Login', () => {
     await page.click('button[type="submit"]');
     await page.waitForSelector('.ant-layout-sider h1'); // should display error
     const text = await page.evaluate(() => document.body.innerHTML);
-    expect(text).toContain('<h1>浜у搧鍞墠绠＄悊绯荤粺</h1>');
+    expect(text).toContain('<h1>产品售前管理系统</h1>');
   });
 
   afterAll(() => browser.close());

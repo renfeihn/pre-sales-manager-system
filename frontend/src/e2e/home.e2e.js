@@ -7,7 +7,7 @@ describe('Homepage', () => {
     await page.goto('http://localhost:8000');
     await page.waitForSelector('h1');
     const text = await page.evaluate(() => document.body.innerHTML);
-    expect(text).toContain('<h1>浜у搧鍞墠绠＄悊绯荤粺</h1>');
+    expect(text).toContain('<h1>产品售前管理系统</h1>');
     await page.close();
     browser.close();
   });

@@ -79,7 +79,7 @@ export async function queryNotices() {
 }
 
 
-// 鎻愪氦椤圭洰淇℃伅
+// 提交项目信息
 export async function projectSubmitForm(params) {
   return request('/api/project', {
     method: 'POST',

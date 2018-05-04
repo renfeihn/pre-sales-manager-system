@@ -27,7 +27,7 @@ const proxy = {
       },
     },
     $body: {
-      name: '曲丽丽',
+      name: 'Serati Ma',
       avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
       userid: '00000001',
       notifyCount: 0,
@@ -68,13 +68,13 @@ const proxy = {
     $body: postRule,
   },
   'POST /api/forms': (req, res) => {
-    res.send({message: 'Ok'});
+    res.send({ message: 'Ok' });
   },
   'POST /api/project': (req, res) => {
     res.send({message: 'Ok'});
   },
   'GET /api/tags': mockjs.mock({
-    'list|100': [{name: '@city', 'value|1-100': 150, 'type|0-2': 1}],
+    'list|100': [{ name: '@city', 'value|1-100': 150, 'type|0-2': 1 }],
   }),
   'GET /api/fake_list': getFakeList,
   'GET /api/fake_chart_data': getFakeChartData,
@@ -106,7 +106,7 @@ const proxy = {
     });
   },
   'POST /api/register': (req, res) => {
-    res.send({status: 'ok', currentAuthority: 'user'});
+    res.send({ status: 'ok', currentAuthority: 'user' });
   },
   'GET /api/notices': getNotices,
   'GET /api/500': (req, res) => {
