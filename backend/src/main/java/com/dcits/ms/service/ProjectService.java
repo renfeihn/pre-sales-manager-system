@@ -46,10 +46,11 @@ public class ProjectService {
 
     public List<ProjectVo> findByNum(Integer max) {
         List<ProjectVo> result = new ArrayList<>();
-        List<Project> list = (List) projectRepository.findByNum(max);
-        if(null != list && list.size() > 0){
+//        PageRequest pageRequest = new PageRequest(0, 10);
+        List<Project> list = (List) projectRepository.findByNum(6);
+        if (null != list && list.size() > 0) {
             ProjectVo projectVo = null;
-            for (Project project : list){
+            for (Project project : list) {
                 projectVo = new ProjectVo();
 
                 projectVo.setId(project.getId());
