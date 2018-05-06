@@ -67,15 +67,18 @@ export default class BasicList extends PureComponent {
       total: 50,
     };
 
-    const ListContent = ({ data: { owner, createdAt, percent, status } }) => (
+    const ListContent = ({ data: { createBy, startDate, percent, status } }) => (
+
+      // console.log(createBy),
+
       <div className={styles.listContent}>
         <div className={styles.listContentItem}>
           <span>Owner</span>
-          <p>{owner}</p>
+          <p>{createBy.zhName}</p>
         </div>
         <div className={styles.listContentItem}>
           <span>开始时间</span>
-          <p>{moment(createdAt).format('YYYY-MM-DD HH:mm')}</p>
+          <p>{moment(startDate).format('YYYY-MM-DD HH:mm')}</p>
         </div>
         <div className={styles.listContentItem}>
           <Progress percent={percent} status={status} strokeWidth={6} style={{ width: 180 }} />
@@ -137,11 +140,11 @@ export default class BasicList extends PureComponent {
               pagination={paginationProps}
               dataSource={list}
               renderItem={item => (
-                <List.Item actions={[<a>编辑</a>, <MoreBtn />]}>
+                <List.Item actions={[<a>编辑</a>, <a>删除</a>]}>
                   <List.Item.Meta
                     avatar={<Avatar src={item.logo} shape="square" size="large" />}
-                    title={<a href={item.href}>{item.title}</a>}
-                    description={item.subDescription}
+                    title={<a href={item.href}>{item.baseProject.name}</a>}
+                    description={item.projectDesc}
                   />
                   <ListContent data={item} />
                 </List.Item>

@@ -2,6 +2,8 @@ package com.dcits.ms.controller;
 
 import com.dcits.ms.model.User;
 import com.dcits.ms.model.vo.UserVo;
+import com.dcits.ms.service.ProjectService;
+import com.dcits.ms.service.SupporterService;
 import com.dcits.ms.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,50 +26,56 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
-public class UserController {
+public class UserController extends BaseController {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     static final String USERNAME = "username";
     static final String AUTHORIZATIONS = "permissions";
 
+
     @Autowired
-    UserService userService;
-
-
-    @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public HttpEntity<Map> user(HttpServletRequest request) {
-
-        logger.debug("user start");
-
-        Map<String, Object> result = new HashMap<String, Object>();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Map<String, Boolean> authorizations = new HashMap();
-        for (GrantedAuthority grantedAuthority : auth.getAuthorities()) {
-            authorizations.put(grantedAuthority.getAuthority(), Boolean.TRUE);
-        }
-        result.put(AUTHORIZATIONS, authorizations);
-        String username = (String) auth.getPrincipal();
-        result.put(USERNAME, username);
-        if ("anonymousUser".equals(username)) {
-            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
-        }
-        return new HttpEntity(result);
-    }
+    ProjectService projectService;
+    @Autowired
+    SupporterService supporterService;
 
     @RequestMapping(value = "/currentUser", method = RequestMethod.GET)
-    public HttpEntity<Map> currentUser(HttpServletRequest request) {
-        logger.debug("user start");
+    public HttpEntity<Map> currentUser() {
+        logger.debug("currentUser start");
         Map<String, Object> result = new HashMap<String, Object>();
 
-        result.put("name", "曲丽丽");
+        User user = this.getUser();
+        result.put("name", user.getZhName());
         result.put("avatar", "https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png");
-        result.put("userid", "00000001");
+        result.put("userid", user.getId());
         result.put("notifyCount", 0);
         return new HttpEntity(result);
     }
 
+    /**
+     * 功能说明：
+     * @return
+     */
+    @RequestMapping(value = "/getWorkInfo", method = RequestMethod.GET)
+    public HttpEntity<Map> getWorkInfo() {
+        Map result = new HashMap();
+        User user = this.getUser();
+        result.put("user", user);
+        result.put("projectCount", this.projectService.findProjectCount());
+        // 当年项目数量
+        result.put("projectCurrCount", this.projectService.findProjectsByCreateDate().size());
+        result.put("supporterCount", this.supporterService.findSupporterCount());
 
+        return new HttpEntity<>(result);
+    }
+
+
+    /**
+     * 功能说明：获取用户列表
+     *
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/userList", method = RequestMethod.GET)
     public HttpEntity<List> userList(HttpServletRequest request) {
         List<User> list = userService.findAll();
@@ -84,6 +92,12 @@ public class UserController {
         return new HttpEntity(result);
     }
 
+    /**
+     * 功能说明：登录
+     *
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "login/account", method = RequestMethod.POST)
     public HttpEntity<Map> login(HttpServletRequest request) {
         Map<String, Object> result = new HashMap<String, Object>();

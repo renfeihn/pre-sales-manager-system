@@ -1,4 +1,4 @@
-import { parse } from 'url';
+import {parse} from 'url';
 
 const titles = [
   '上海银行',
@@ -79,15 +79,13 @@ export function fakeList(count) {
       updatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 2 * i),
       createdAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 36 * i),
       subDescription: desc[i % 5],
-      description:
-        '在中台产品的研发过程中，会出现不同的设计规范和实现方式，但其中往往存在很多类似的页面和组件，这些类似的组件会被抽离成一套标准规范。',
+      description: '在中台产品的研发过程中，会出现不同的设计规范和实现方式，但其中往往存在很多类似的页面和组件，这些类似的组件会被抽离成一套标准规范。',
       activeUser: Math.ceil(Math.random() * 100000) + 100000,
       newUser: Math.ceil(Math.random() * 1000) + 1000,
       star: Math.ceil(Math.random() * 100) + 100,
       like: Math.ceil(Math.random() * 100) + 100,
       message: Math.ceil(Math.random() * 10) + 10,
-      content:
-        '段落示意：蚂蚁金服设计平台 ant.design，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。蚂蚁金服设计平台 ant.design，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。',
+      content: '段落示意：蚂蚁金服设计平台 ant.design，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。蚂蚁金服设计平台 ant.design，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。',
       members: [
         {
           avatar: 'https://gw.alipayobjects.com/zos/rmsportal/ZiESqWwCXBRQoaPONSJe.png',
@@ -130,61 +128,61 @@ export function getFakeList(req, res, u) {
 export const getNotice = [
   {
     id: 'xxx1',
-    title: titles[0],
+    projectName: titles[0],
     logo: avatars[0],
-    description: desc[0],
-    updatedAt: new Date('2017-12-20'),
-    member: '东区事业部',
+    projectDesc: desc[0],
+    updateDate: new Date('2017-12-20'),
+    departmentName: '东区事业部',
     href: '',
     memberLink: '',
   },
   {
     id: 'xxx2',
-    title: titles[1],
+    projectName:  titles[1],
     logo: avatars[1],
-    description: desc[1],
-    updatedAt: new Date('2016-11-13'),
-    member: '北区事业部祖',
+    projectDesc: desc[1],
+    updateDate: new Date('2016-11-13'),
+    departmentName: '北区事业部祖',
     href: '',
     memberLink: '',
   },
   {
     id: 'xxx3',
-    title: titles[2],
+    projectName: titles[2],
     logo: avatars[2],
-    description: desc[2],
-    updatedAt: new Date('2016-12-14'),
-    member: '北区事业部',
+    projectDesc: desc[2],
+    updateDate: new Date('2016-12-14'),
+    departmentName: '北区事业部',
     href: '',
     memberLink: '',
   },
   {
     id: 'xxx4',
-    title: titles[3],
+    projectName: titles[3],
     logo: avatars[3],
-    description: desc[3],
-    updatedAt: new Date('2017-12-23'),
-    member: '东北事业部',
+    projectDesc: desc[3],
+    updateDate: new Date('2017-12-23'),
+    departmentName: '东北事业部',
     href: '',
     memberLink: '',
   },
   {
     id: 'xxx5',
-    title: titles[4],
+    projectName: titles[4],
     logo: avatars[4],
-    description: desc[4],
-    updatedAt: new Date('2016-01-04'),
-    member: '西区事业部',
+    projectDesc: desc[4],
+    updateDate: new Date('2016-01-04'),
+    departmentName: '西区事业部',
     href: '',
     memberLink: '',
   },
   {
     id: 'xxx6',
-    title: titles[5],
+    projectName: titles[5],
     logo: avatars[5],
-    description: desc[5],
-    updatedAt: new Date('2016-10-16'),
-    member: '南区事业部',
+    projectDesc: desc[5],
+    updateDate: new Date('2016-10-16'),
+    departmentName: '南区事业部',
     href: '',
     memberLink: '',
   },
@@ -193,7 +191,6 @@ export const getNotice = [
 export const getActivities = [
   {
     id: 'trend-1',
-    updatedAt: new Date(),
     user: {
       name: '曲丽丽',
       avatar: avatars2[0],
@@ -205,12 +202,12 @@ export const getActivities = [
     project: {
       name: '上海银行售前项目',
       link: '',
+      updateDate: new Date(),
     },
     template: '在 @{group} 新建项目 @{project}',
   },
   {
     id: 'trend-2',
-    updatedAt: new Date(),
     user: {
       name: '付小小',
       avatar: avatars2[1],
@@ -222,12 +219,12 @@ export const getActivities = [
     project: {
       name: '厦门银行售前项目',
       link: '',
+      updateDate: new Date(),
     },
     template: '在 @{group} 新建项目 @{project}',
   },
   {
     id: 'trend-3',
-    updatedAt: new Date(),
     user: {
       name: '林东东',
       avatar: avatars2[2],
@@ -239,12 +236,12 @@ export const getActivities = [
     project: {
       name: '2',
       link: '',
+      updateDate: new Date(),
     },
     template: '在 @{group} 申请核心支持人员 @{project} 人',
   },
   {
     id: 'trend-4',
-    updatedAt: new Date(),
     user: {
       name: '周星星',
       avatar: avatars2[4],
@@ -252,11 +249,12 @@ export const getActivities = [
     project: {
       name: '百信项目组',
       link: '',
+      updateDate: new Date(),
     },
-      members: {
-          name: '3',
-          link: '',
-      },
+    members: {
+      name: '3',
+      link: '',
+    },
     template: '从 @{project} 撤出  @{members} 人',
   },
 

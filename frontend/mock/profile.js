@@ -99,24 +99,24 @@ const advancedOperation1 = [
 
 const advancedOperation11 = [
 
-    {
-        type: '1',
-        workId: '01010279',
-        name: '任飞',
-        department: '业务解决方案部',
-    },
-    {
-        type: '2',
-        workId: '01010798',
-        name: '袁靖鹏',
-        department: '产品中心',
-    },
-    {
-        type: '3',
-        workId: '01008765',
-        name: '加鑫',
-        department: '产品中心',
-    },
+  {
+    type: '1',
+    workId: '01010279',
+    name: '任飞',
+    department: '业务解决方案部',
+  },
+  {
+    type: '2',
+    workId: '01010798',
+    name: '袁靖鹏',
+    department: '产品中心',
+  },
+  {
+    type: '3',
+    workId: '01008765',
+    name: '加鑫',
+    department: '产品中心',
+  },
 
 ];
 
@@ -152,7 +152,7 @@ export const getProfileAdvancedData = {
   advancedOperation1,
   advancedOperation2,
   advancedOperation3,
-    advancedOperation11,
+  advancedOperation11,
 };
 
 export default {
