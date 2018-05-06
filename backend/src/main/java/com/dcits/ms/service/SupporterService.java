@@ -36,6 +36,10 @@ public class SupporterService {
     }
 
 
+    public Long findSupporterCount() {
+        return this.supporterRepository.count();
+    }
+
     public List<Project> findAll() {
         return (List) supporterRepository.findAll();
     }
