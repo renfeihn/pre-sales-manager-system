@@ -25,7 +25,6 @@ public class ProjectService {
     ProjectRepository projectRepository;
     @Autowired
     ProjectFactory projectFactory;
-
     @Autowired
     DepartmentService departmentService;
     @Autowired
@@ -78,7 +77,7 @@ public class ProjectService {
     }
 
 
-    public Project findById(Long id){
+    public Project findById(Integer id){
         return this.projectRepository.findOne(id);
     }
 

@@ -9,7 +9,10 @@ import com.dcits.ms.model.vo.ProjectVo;
 import com.dcits.ms.model.vo.SupporterVo;
 import com.dcits.ms.repository.ProjectRepository;
 import com.dcits.ms.repository.SupporterRepository;
+import com.dcits.ms.util.BusiUtil;
+import com.dcits.ms.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +36,11 @@ public class SupporterService {
             supporterRepository.save(supporter);
 
         }
+    }
+
+
+    public List<Supporter> findSupporterByProject(Project project) {
+        return this.supporterRepository.findSupporterByProject(project);
     }
 
 

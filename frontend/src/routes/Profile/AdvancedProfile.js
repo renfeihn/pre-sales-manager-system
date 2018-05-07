@@ -36,35 +36,22 @@ const menu = (
   </Menu>
 );
 
-const action = (
-  <Fragment>
-    <Button type="primary">通过</Button>
-    <Button>驳回</Button>
-  </Fragment>
-);
+// const action = (
+//   <Fragment>
+//     <Button type="primary">通过</Button>
+//     <Button>驳回</Button>
+//   </Fragment>
+// );
 
 const extra = (
   <Row>
     <Col xs={24} sm={12}>
       <div className={styles.textSecondary}>状态</div>
-      <div className={styles.heading}>待部门审批</div>
+      <div className={styles.heading}>新建</div>
     </Col>
   </Row>
 );
 
-const description = (
-  <DescriptionList className={styles.headerList} size="small" col="2">
-    <Description term="创建人">曲丽丽</Description>
-    <Description term="事业部">东区事业部</Description>
-    <Description term="创建时间">2017-07-07</Description>
-    <Description term="生效日期">2017-07-07 ~ 2017-08-08</Description>
-    <Description term="项目信息">上海银行售前项目</Description>
-    <Description term="备注">请于两个工作日内确认</Description>
-  </DescriptionList>
-
-
-
-);
 
 const tabList = [
   {
@@ -179,8 +166,8 @@ const columns = [
 const columns1 = [
   {
     title: '编号',
-    dataIndex: 'type',
-    key: 'type',
+    dataIndex: 'id',
+    key: 'id',
   },
   {
     title: '姓名',
@@ -188,14 +175,14 @@ const columns1 = [
     key: 'name',
   },
   {
-    title: '工号',
-    dataIndex: 'workId',
-    key: 'workId',
+    title: '级别',
+    dataIndex: 'jobTitle',
+    key: 'jobTitle',
   },
   {
-    title: '备注',
-    dataIndex: 'department',
-    key: 'department',
+    title: '所属部门',
+    dataIndex: 'departmentName',
+    key: 'departmentName',
   },
 ];
 
@@ -250,7 +237,21 @@ export default class AdvancedProfile extends Component {
   render() {
     const {stepDirection} = this.state;
     const {profile, loading} = this.props;
-    const {advancedOperation1, advancedOperation2, advancedOperation3, advancedOperation11} = profile;
+    const {advancedOperation1, advancedOperation2, advancedOperation3, project, supporters} = profile;
+
+    // console.log(project);
+
+    const description = (
+      <DescriptionList className={styles.headerList} size="small" col="2">
+        <Description term="创建人">{ project.createBy ? project.createBy.zhName : ''}</Description>
+        <Description term="事业部">{project.department ? project.department.name : ''}</Description>
+        <Description term="创建时间">{project.createDate}</Description>
+        <Description term="生效日期">{project.startDate} ~ {project.endDate}</Description>
+        <Description term="项目信息">{project.projectDesc}</Description>
+        <Description term="备注">{project.remarks}</Description>
+      </DescriptionList>
+    );
+
     const contentList = {
       tab1: (
         <Table
@@ -283,7 +284,7 @@ export default class AdvancedProfile extends Component {
         <Table
           pagination={false}
           loading={loading}
-          dataSource={advancedOperation11}
+          dataSource={supporters}
           columns={columns1}
         />
       ),
@@ -291,29 +292,21 @@ export default class AdvancedProfile extends Component {
 
     return (
       <PageHeaderLayout
-        title="项目名称：上海银行售前项目"
+        title={"项目名称：" }
         logo={
           <img alt="" src="https://gw.alipayobjects.com/zos/rmsportal/nxkuOJlFJuAUhzlMTCEe.png"/>
         }
-        action={action}
         content={description}
         extraContent={extra}
         tabList={tabList}
       >
         <Card title="流程进度" style={{marginBottom: 24}} bordered={false}>
-          <Steps direction={stepDirection} progressDot={customDot} current={2}>
+          <Steps direction={stepDirection} progressDot={customDot} current={0}>
             <Step title="创建项目" description={desc1}/>
-            <Step title="一级审批" description={desc2}/>
-            <Step title="部门审批" description={desc3}/>
             <Step title="完成"/>
           </Steps>
         </Card>
 
-        <Card title="用户近半年项目记录" style={{marginBottom: 24}} bordered={false}>
-          <div className={styles.noData}>
-            <Icon type="frown-o"/>暂无数据
-          </div>
-        </Card>
 
         <Card
           className={styles.tabsCard}

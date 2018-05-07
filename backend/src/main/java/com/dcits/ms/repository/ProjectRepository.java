@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Date;
 import java.util.List;
 
-public interface ProjectRepository extends JpaRepository<Project, Long> {
+public interface ProjectRepository extends JpaRepository<Project, Integer> {
 
 
     @Query(value = "select * from ms_project t order by create_date desc limit 0,?", nativeQuery = true)

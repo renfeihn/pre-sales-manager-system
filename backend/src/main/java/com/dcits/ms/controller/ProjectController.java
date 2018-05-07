@@ -1,12 +1,15 @@
 package com.dcits.ms.controller;
 
 import com.dcits.ms.model.Project;
+import com.dcits.ms.model.Supporter;
 import com.dcits.ms.model.User;
 import com.dcits.ms.model.vo.ActivityVo;
 import com.dcits.ms.model.vo.ProjectVo;
 import com.dcits.ms.security.SecurityAppContext;
 import com.dcits.ms.service.ProjectService;
+import com.dcits.ms.service.SupporterService;
 import com.dcits.ms.service.UserService;
+import com.dcits.ms.util.Maps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +25,12 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
-public class ProjectController extends BaseController{
+public class ProjectController extends BaseController {
 
     @Autowired
     ProjectService projectService;
     @Autowired
-    UserService userService;
-    @Autowired
-    SecurityAppContext securityAppContext;
-
+    SupporterService supporterService;
 
     @RequestMapping(value = "/project", method = RequestMethod.GET)
     public HttpEntity<List> getProjects() {
@@ -63,15 +63,20 @@ public class ProjectController extends BaseController{
     }
 
     @RequestMapping(value = "/project/info", method = RequestMethod.GET)
-    public HttpEntity<Project> getProjectInfo(Long id) {
+    public HttpEntity<Project> getProjectInfo(Integer id) {
+        Map map = Maps.newHashMap();
         Project project = projectService.findById(id);
+        map.put("project", project);
 
-        return new HttpEntity(project);
+        List<Supporter> supporters = this.supporterService.findSupporterByProject(project);
+
+        map.put("supporters", supporters);
+
+        return new HttpEntity(map);
     }
 
 
     /**
-     *
      * @return
      */
     @RequestMapping(value = "/activities", method = RequestMethod.GET)
@@ -81,9 +86,6 @@ public class ProjectController extends BaseController{
 
         return new HttpEntity(list);
     }
-
-
-
 
 
 }

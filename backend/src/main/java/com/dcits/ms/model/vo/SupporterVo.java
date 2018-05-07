@@ -18,12 +18,22 @@ import java.util.Date;
 public class SupporterVo {
 
 
+    Integer id;
+
     // 支持人员姓名
     String name;
 
     // 支持人员岗位
     String jobTitle;
 
-
+    // 部门名称
     String departmentName;
+
+
+    public SupporterVo(Integer id, String name, String jobTitle, String departmentName) {
+        this.id = id;
+        this.name = name;
+        this.jobTitle = jobTitle;
+        this.departmentName = departmentName;
+    }
 }

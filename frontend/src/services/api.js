@@ -101,6 +101,7 @@ export async function queryFakeList(params) {
 
 // 项目详情页
 export async function queryAdvancedProfile(params) {
-  return request(`/api/project/info?id=${stringify(params)}`);
+  // console.log('params: '+params.id);
+  return request(`/api/project/info?id=${params.id}`);
 
 }

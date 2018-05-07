@@ -83,7 +83,7 @@ public class UserController extends BaseController {
         if (null != list) {
             UserVo userVo = null;
             for (User u : list) {
-                userVo = new UserVo(u.getId(), u.getUsername(),
+                userVo = new UserVo(u.getId(), u.getZhName(),
                         u.getDepartment().getName(), u.getJobTitle());
                 result.add(userVo);
             }
