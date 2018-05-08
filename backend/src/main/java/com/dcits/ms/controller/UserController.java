@@ -109,7 +109,7 @@ public class UserController extends BaseController {
         result.put(AUTHORIZATIONS, authorizations);
         String username = (String) auth.getPrincipal();
         result.put(USERNAME, username);
-        result.put("currentAuthority", username);
+        result.put("currentAuthority", authorizations);
         result.put("status", "ok");
 
         if ("anonymousUser".equals(username)) {
