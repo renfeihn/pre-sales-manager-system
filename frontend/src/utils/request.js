@@ -2,7 +2,7 @@ import fetch from 'dva/fetch';
 import {notification} from 'antd';
 import {routerRedux} from 'dva/router';
 import store from '../index';
-import {getAuthority} from './authority';
+import {getAuthorizations} from './authority';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -74,11 +74,11 @@ export default function request(url, options) {
   }
 
   newOptions.headers = {
-    'Authorization': getAuthority(),
+    Authorization : getAuthorizations(),
     ...newOptions.headers,
   };
 
-  // console.log('headers: ' + JSON.stringify(newOptions));
+  // console.log('headers: ' + getAuthorizations());
 
   return fetch(url, newOptions)
     .then(checkStatus)

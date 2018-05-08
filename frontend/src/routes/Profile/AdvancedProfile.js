@@ -1,5 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import Debounce from 'lodash-decorators/debounce';
+import moment from 'moment';
 import Bind from 'lodash-decorators/bind';
 import {connect} from 'dva';
 import {
@@ -60,15 +61,6 @@ const tabList = [
   },
 ];
 
-const desc1 = (
-  <div className={classNames(styles.textSecondary, styles.stepDescription)}>
-    <Fragment>
-      曲丽丽
-      <Icon type="dingding-o" style={{marginLeft: 8}}/>
-    </Fragment>
-    <div>2017-10-03 12:32</div>
-  </div>
-);
 
 const desc2 = (
   <div className={classNames(styles.textSecondary, styles.stepDescription)}>
@@ -186,14 +178,16 @@ const columns1 = [
   },
 ];
 
-@connect(({profile, loading}) => ({
+@connect(({profile, id, loading}) => ({
   profile,
+  id,
   loading: loading.effects['profile/fetchAdvanced'],
 }))
 export default class AdvancedProfile extends Component {
   state = {
     operationkey: 'tab1',
     stepDirection: 'horizontal',
+    id: 1,
   };
 
   componentDidMount() {
@@ -201,7 +195,7 @@ export default class AdvancedProfile extends Component {
     dispatch({
       type: 'profile/fetchAdvanced',
       payload: {
-        id: 1,
+        id: this.state.id,
       },
     });
 
@@ -245,11 +239,22 @@ export default class AdvancedProfile extends Component {
       <DescriptionList className={styles.headerList} size="small" col="2">
         <Description term="创建人">{ project.createBy ? project.createBy.zhName : ''}</Description>
         <Description term="事业部">{project.department ? project.department.name : ''}</Description>
-        <Description term="创建时间">{project.createDate}</Description>
+        <Description term="创建时间">{moment(project.createDate).format('YYYY-MM-DD HH:mm')}</Description>
         <Description term="生效日期">{project.startDate} ~ {project.endDate}</Description>
         <Description term="项目信息">{project.projectDesc}</Description>
         <Description term="备注">{project.remarks}</Description>
       </DescriptionList>
+    );
+
+
+    const desc1 = (
+      <div className={classNames(styles.textSecondary, styles.stepDescription)}>
+        <Fragment>
+          { project.createBy ? project.createBy.zhName : ''}
+          <Icon type="dingding-o" style={{marginLeft: 8}}/>
+        </Fragment>
+        <div>{moment(project.createDate).format('YYYY-MM-DD HH:mm')}</div>
+      </div>
     );
 
     const contentList = {
@@ -292,7 +297,7 @@ export default class AdvancedProfile extends Component {
 
     return (
       <PageHeaderLayout
-        title={"项目名称：" }
+        title={"项目名称：" + project.baseProject ? project.baseProject.name : '' }
         logo={
           <img alt="" src="https://gw.alipayobjects.com/zos/rmsportal/nxkuOJlFJuAUhzlMTCEe.png"/>
         }
@@ -301,8 +306,9 @@ export default class AdvancedProfile extends Component {
         tabList={tabList}
       >
         <Card title="流程进度" style={{marginBottom: 24}} bordered={false}>
-          <Steps direction={stepDirection} progressDot={customDot} current={0}>
+          <Steps direction={stepDirection} progressDot={customDot} current={1}>
             <Step title="创建项目" description={desc1}/>
+            <Step title="POC进行中"/>
             <Step title="完成"/>
           </Steps>
         </Card>

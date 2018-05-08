@@ -19,11 +19,11 @@ public class BusiUtil {
                 flag = true;
             }
         } else if (o instanceof List) {
-            if(((List)o).isEmpty() || ((List)o).size() == 0){
+            if (((List) o).isEmpty() || ((List) o).size() == 0) {
                 flag = true;
             }
         } else if (o instanceof Map) {
-            if(((Map)o).isEmpty() || ((Map)o).size() == 0){
+            if (((Map) o).isEmpty() || ((Map) o).size() == 0) {
                 flag = true;
             }
         }
@@ -36,11 +36,32 @@ public class BusiUtil {
         return !isNull(o);
     }
 
-    public static void printLine(Object obj){
+    public static boolean isNotNullAll(Object... objects) {
+        boolean b = true;
+        for (Object o : objects) {
+            if (isNull(o)) {
+                b = false;
+                break;
+            }
+        }
+        return b;
+    }
+
+
+    public static boolean isEquals(Object o1, Object o2) {
+        if (isNotNullAll(o1, o2)) {
+            if (o1.equals(o2)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void printLine(Object obj) {
         System.out.println(obj);
     }
 
-    public static void printInLine(Object obj){
+    public static void printInLine(Object obj) {
         System.out.print(obj);
     }
 

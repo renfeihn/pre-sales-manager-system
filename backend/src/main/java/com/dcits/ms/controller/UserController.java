@@ -4,21 +4,16 @@ import com.dcits.ms.model.User;
 import com.dcits.ms.model.vo.UserVo;
 import com.dcits.ms.service.ProjectService;
 import com.dcits.ms.service.SupporterService;
-import com.dcits.ms.service.UserService;
+import com.dcits.ms.util.BusiUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +34,28 @@ public class UserController extends BaseController {
     @Autowired
     SupporterService supporterService;
 
+
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public HttpEntity<Map> user(HttpServletRequest request) {
+
+        logger.debug("user start");
+
+        Map<String, Object> result = new HashMap<String, Object>();
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        Map<String, Boolean> authorizations = new HashMap();
+//        for (GrantedAuthority grantedAuthority : auth.getAuthorities()) {
+//            authorizations.put(grantedAuthority.getAuthority(), Boolean.TRUE);
+//        }
+//        result.put(AUTHORIZATIONS, authorizations);
+//        String username = (String) auth.getPrincipal();
+//        result.put(USERNAME, username);
+//        if ("anonymousUser".equals(username)) {
+//            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+//        }
+        return new HttpEntity(result);
+    }
+
+
     @RequestMapping(value = "/currentUser", method = RequestMethod.GET)
     public HttpEntity<Map> currentUser() {
         logger.debug("currentUser start");
@@ -54,6 +71,7 @@ public class UserController extends BaseController {
 
     /**
      * 功能说明：
+     *
      * @return
      */
     @RequestMapping(value = "/getWorkInfo", method = RequestMethod.GET)
@@ -95,26 +113,37 @@ public class UserController extends BaseController {
     /**
      * 功能说明：登录
      *
-     * @param request
+     * @param body
      * @return
      */
     @RequestMapping(value = "login/account", method = RequestMethod.POST)
-    public HttpEntity<Map> login(HttpServletRequest request) {
-        Map<String, Object> result = new HashMap<String, Object>();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Map<String, Boolean> authorizations = new HashMap();
-        for (GrantedAuthority grantedAuthority : auth.getAuthorities()) {
-            authorizations.put(grantedAuthority.getAuthority(), Boolean.TRUE);
-        }
-        result.put(AUTHORIZATIONS, authorizations);
-        String username = (String) auth.getPrincipal();
-        result.put(USERNAME, username);
-        result.put("currentAuthority", authorizations);
-        result.put("status", "ok");
+    public HttpEntity<Map> login(@RequestBody String body) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
 
-        if ("anonymousUser".equals(username)) {
-            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        Map<String, String> map = mapper.readValue(body, Map.class);
+
+        String username = map.get("username");
+        String password = map.get("password");
+
+        String authorizations = "";
+        String status = "error";
+
+        if (BusiUtil.isNotNullAll(username, password)) {
+            User u = userService.findByUsername(username);
+            if (BusiUtil.isNotNull(u) && BusiUtil.isEquals(password, u.getPassword())) {
+                authorizations = username + "_" + password;
+                status = "ok";
+            } else {
+                username = "guest";
+            }
         }
+
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put(USERNAME, username);
+        result.put("currentAuthority", "admin");
+        result.put("status", status);
+        result.put(AUTHORIZATIONS, authorizations);
+
         return new HttpEntity(result);
     }
 

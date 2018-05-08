@@ -1,9 +1,9 @@
-import React, { PureComponent } from 'react';
+import React, {PureComponent} from 'react';
 import moment from 'moment';
-// import { Link } from 'dva/router';
-import {routerRedux} from 'dva/router';
+import {Link, Route, routerRedux} from 'dva/router';
+import {AdvancedProfile} from '../Profile/AdvancedProfile';
 
-import { connect } from 'dva';
+import {connect} from 'dva';
 import {
   List,
   Card,
@@ -25,9 +25,9 @@ import styles from './BasicList.less';
 
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
-const { Search } = Input;
+const {Search} = Input;
 
-@connect(({ list, loading }) => ({
+@connect(({list, loading}) => ({
   list,
   loading: loading.models.list,
 }))
@@ -41,18 +41,23 @@ export default class BasicList extends PureComponent {
     });
   };
 
-  // handleAdd(event) {
-  //   this.context.router.push('/')
-  // };
 
-  handleDispatch(id){
-    dispatch(routerRedux.push('/exception/500'));
-  }
+  handleDispatch(id) {
+    dispatch(
+      routerRedux.push({
+        pathname: '/user/register-result',
+        state: {
+          id: id,
+        },
+      })
+    );
+  };
 
   render() {
-    const { list: { list }, loading } = this.props;
+    const {list: {list}, loading} = this.props;
 
-    const Info = ({ title, value, bordered }) => (
+
+    const Info = ({title, value, bordered}) => (
       <div className={styles.headerInfo}>
         <span>{title}</span>
         <p>{value}</p>
@@ -67,7 +72,7 @@ export default class BasicList extends PureComponent {
           <RadioButton value="progress">进行中</RadioButton>
           <RadioButton value="waiting">等待中</RadioButton>
         </RadioGroup>
-        <Search className={styles.extraContentSearch} placeholder="请输入" onSearch={() => ({})} />
+        <Search className={styles.extraContentSearch} placeholder="请输入" onSearch={() => ({})}/>
       </div>
     );
 
@@ -78,7 +83,7 @@ export default class BasicList extends PureComponent {
       total: 50,
     };
 
-    const ListContent = ({ data: { createBy, startDate, percent, status } }) => (
+    const ListContent = ({data: {createBy, startDate, percent, status}}) => (
 
       // console.log(createBy),
 
@@ -92,7 +97,7 @@ export default class BasicList extends PureComponent {
           <p>{moment(startDate).format('YYYY-MM-DD HH:mm')}</p>
         </div>
         <div className={styles.listContentItem}>
-          <Progress percent={percent} status={status} strokeWidth={6} style={{ width: 180 }} />
+          <Progress percent={percent} status={status} strokeWidth={6} style={{width: 180}}/>
         </div>
       </div>
     );
@@ -122,13 +127,13 @@ export default class BasicList extends PureComponent {
           <Card bordered={false}>
             <Row>
               <Col sm={8} xs={24}>
-                <Info title="我的待办" value="0个任务" bordered />
+                <Info title="我的待办" value="0个任务" bordered/>
               </Col>
               <Col sm={8} xs={24}>
-                <Info title="进行中的任务" value="0个任务" bordered />
+                <Info title="进行中的任务" value="0个任务" bordered/>
               </Col>
               <Col sm={8} xs={24}>
-                <Info title="本周完成任务数" value="0个任务" />
+                <Info title="本周完成任务数" value="0个任务"/>
               </Col>
             </Row>
           </Card>
@@ -137,14 +142,14 @@ export default class BasicList extends PureComponent {
             className={styles.listCard}
             bordered={false}
             title="项目列表"
-            style={{ marginTop: 24 }}
-            bodyStyle={{ padding: '0 32px 40px 32px' }}
+            style={{marginTop: 24}}
+            bodyStyle={{padding: '0 32px 40px 32px'}}
             extra={extraContent}
           >
             <Link to='/form/basic-form'>
-            <Button type="dashed" style={{ width: '100%', marginBottom: 8 }} icon="plus">
-              添加
-            </Button>
+              <Button type="dashed" style={{width: '100%', marginBottom: 8}} icon="plus">
+                添加
+              </Button>
             </Link>
             <List
               size="large"
@@ -155,11 +160,12 @@ export default class BasicList extends PureComponent {
               renderItem={item => (
                 <List.Item actions={[<a>编辑</a>, <a>删除</a>]}>
                   <List.Item.Meta
-                    avatar={<Avatar src={item.logo} shape="square" size="large" />}
-                    title={<a href={'/profile/advanced?'+item.id}>{item.baseProject.name}</a>}
+                    avatar={<Avatar src={item.logo} shape="square" size="large"/>}
+                    title={<Route path={"profile/advanced/" + item.id}
+                                  component={AdvancedProfile}>{item.baseProject.name}</Route>}
                     description={item.projectDesc}
                   />
-                  <ListContent data={item} />
+                  <ListContent data={item}/>
                 </List.Item>
               )}
             />

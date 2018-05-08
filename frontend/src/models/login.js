@@ -1,7 +1,7 @@
-import { routerRedux } from 'dva/router';
-import { fakeAccountLogin } from '../services/api';
-import { setAuthority } from '../utils/authority';
-import { reloadAuthorized } from '../utils/Authorized';
+import {routerRedux} from 'dva/router';
+import {fakeAccountLogin} from '../services/api';
+import {setAuthority, setAuthorizations} from '../utils/authority';
+import {reloadAuthorized} from '../utils/Authorized';
 
 export default {
   namespace: 'login',
@@ -11,7 +11,7 @@ export default {
   },
 
   effects: {
-    *login({ payload }, { call, put }) {
+    *login({payload}, {call, put}) {
       const response = yield call(fakeAccountLogin, payload);
       yield put({
         type: 'changeLoginStatus',
@@ -23,7 +23,7 @@ export default {
         yield put(routerRedux.push('/'));
       }
     },
-    *logout(_, { put, select }) {
+    *logout(_, {put, select}) {
       try {
         // get location pathname
         const urlParams = new URL(window.location.href);
@@ -37,6 +37,7 @@ export default {
           payload: {
             status: false,
             currentAuthority: 'guest',
+            permissions:'',
           },
         });
         reloadAuthorized();
@@ -46,8 +47,12 @@ export default {
   },
 
   reducers: {
-    changeLoginStatus(state, { payload }) {
+    changeLoginStatus(state, {payload}) {
+
+      // console.log('permissions: '+payload.permissions);
       setAuthority(payload.currentAuthority);
+      setAuthorizations(payload.permissions);
+
       return {
         ...state,
         status: payload.status,

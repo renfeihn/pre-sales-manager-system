@@ -21,7 +21,6 @@ export default {
       });
     },
     *fetchAdvanced({payload}, {call, put}) {
-      console.log(payload);
       const response = yield call(queryAdvancedProfile, payload);
       yield put({
         type: 'show',
