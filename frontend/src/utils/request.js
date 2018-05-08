@@ -1,7 +1,8 @@
 import fetch from 'dva/fetch';
-import { notification } from 'antd';
-import { routerRedux } from 'dva/router';
+import {notification} from 'antd';
+import {routerRedux} from 'dva/router';
 import store from '../index';
+import {getAuthority} from './authority';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -43,10 +44,18 @@ function checkStatus(response) {
  * @return {object}           An object containing either "data" or "err"
  */
 export default function request(url, options) {
+
+  // console.log('Authority： ' + getAuthority());
+
   const defaultOptions = {
     credentials: 'include',
   };
-  const newOptions = { ...defaultOptions, ...options };
+  const newOptions = {...defaultOptions, ...options};
+
+
+  // console.log('newOptions: ' + JSON.stringify(newOptions));
+  // console.log('getAuthority: ' + getAuthority());
+
   if (newOptions.method === 'POST' || newOptions.method === 'PUT') {
     if (!(newOptions.body instanceof FormData)) {
       newOptions.headers = {
@@ -64,6 +73,13 @@ export default function request(url, options) {
     }
   }
 
+  newOptions.headers = {
+    'Authorization': getAuthority(),
+    ...newOptions.headers,
+  };
+
+  // console.log('headers: ' + JSON.stringify(newOptions));
+
   return fetch(url, newOptions)
     .then(checkStatus)
     .then(response => {
@@ -73,7 +89,7 @@ export default function request(url, options) {
       return response.json();
     })
     .catch(e => {
-      const { dispatch } = store;
+      const {dispatch} = store;
       const status = e.name;
       if (status === 401) {
         dispatch({

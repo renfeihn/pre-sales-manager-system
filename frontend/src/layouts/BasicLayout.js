@@ -263,7 +263,7 @@ class BasicLayout extends React.PureComponent {
 
 export default connect(({ user, global, loading }) => ({
   currentUser: user.currentUser,
-  collapsed: global.collapsed,
+  collapsed: global? global.collapsed : '',
   fetchingNotices: loading.effects['global/fetchNotices'],
-  notices: global.notices,
+  notices: global? global.notices : '',
 }))(BasicLayout);

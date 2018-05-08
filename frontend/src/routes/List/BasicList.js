@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import moment from 'moment';
-import { Link } from 'dva/router';
+// import { Link } from 'dva/router';
+import {routerRedux} from 'dva/router';
+
 import { connect } from 'dva';
 import {
   List,
@@ -42,6 +44,10 @@ export default class BasicList extends PureComponent {
   // handleAdd(event) {
   //   this.context.router.push('/')
   // };
+
+  handleDispatch(id){
+    dispatch(routerRedux.push('/exception/500'));
+  }
 
   render() {
     const { list: { list }, loading } = this.props;
