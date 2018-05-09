@@ -251,7 +251,7 @@ export default class AdvancedProfile extends Component {
       <DescriptionList className={styles.headerList} size="small" col="2">
         <Description term="创建人">{ project.createBy ? project.createBy.zhName : ''}</Description>
         <Description term="事业部">{project.department ? project.department.name : ''}</Description>
-        <Description term="创建时间">{moment(project.createDate).format('YYYY-MM-DD HH:mm')}</Description>
+        <Description term="创建时间">{moment(project.createDate ? project.createDate : 0).format('YYYY-MM-DD HH:mm')}</Description>
         <Description term="生效日期">{project.startDate} ~ {project.endDate}</Description>
         <Description term="项目信息">{project.projectDesc}</Description>
         <Description term="备注">{project.remarks}</Description>
@@ -265,7 +265,7 @@ export default class AdvancedProfile extends Component {
           { project.createBy ? project.createBy.zhName : ''}
           <Icon type="dingding-o" style={{marginLeft: 8}}/>
         </Fragment>
-        <div>{moment(project.createDate).format('YYYY-MM-DD HH:mm')}</div>
+        <div>{moment(project.createDate ? project.createDate : 0).format('YYYY-MM-DD HH:mm')}</div>
       </div>
     );
 
