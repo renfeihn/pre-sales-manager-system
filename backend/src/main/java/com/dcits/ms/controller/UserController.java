@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -57,11 +58,11 @@ public class UserController extends BaseController {
 
 
     @RequestMapping(value = "/currentUser", method = RequestMethod.GET)
-    public HttpEntity<Map> currentUser() {
+    public HttpEntity<Map> currentUser(HttpServletRequest request) {
         logger.debug("currentUser start");
         Map<String, Object> result = new HashMap<String, Object>();
 
-        User user = this.getUser();
+        User user = this.getUser(request);
         result.put("name", user.getZhName());
         result.put("avatar", "https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png");
         result.put("userid", user.getId());
@@ -75,9 +76,9 @@ public class UserController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/getWorkInfo", method = RequestMethod.GET)
-    public HttpEntity<Map> getWorkInfo() {
+    public HttpEntity<Map> getWorkInfo(HttpServletRequest request) {
         Map result = new HashMap();
-        User user = this.getUser();
+        User user = this.getUser(request);
         result.put("user", user);
         result.put("projectCount", this.projectService.findProjectCount());
         // 当年项目数量
@@ -119,7 +120,6 @@ public class UserController extends BaseController {
     @RequestMapping(value = "login/account", method = RequestMethod.POST)
     public HttpEntity<Map> login(@RequestBody String body) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-
         Map<String, String> map = mapper.readValue(body, Map.class);
 
         String username = map.get("username");
