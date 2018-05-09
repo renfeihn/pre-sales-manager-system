@@ -59,12 +59,12 @@ public class Project {
     String state;
 
 
-    @JoinColumn(name = "createUserId", referencedColumnName = "id", nullable = false, updatable = false)
+    @JoinColumn(name = "create_by", referencedColumnName = "id", nullable = false, updatable = false)
     @ManyToOne(optional = false, targetEntity = User.class)
     protected User createBy;
 
 
-    @JoinColumn(name = "updateUserId", referencedColumnName = "id", nullable = false, updatable = false)
+    @JoinColumn(name = "update_by", referencedColumnName = "id", nullable = false, updatable = false)
     @ManyToOne(optional = false, targetEntity = User.class)
     protected User updateBy;
 
@@ -99,8 +99,8 @@ public class Project {
         this.createBy = user;
         this.updateBy = user;
         this.bidRatio = bidRatio;
-        this.createDate = new Date();
-        this.updateDate = new Date();
+//        this.createDate = new Date();
+//        this.updateDate = new Date();
         this.state = "1";
     }
 

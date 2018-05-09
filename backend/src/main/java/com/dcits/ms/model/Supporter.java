@@ -21,7 +21,7 @@ public class Supporter {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Integer id;
 
-    @JoinColumn(name = "projectId", referencedColumnName = "id", nullable = false, updatable = false)
+    @JoinColumn(name = "project_id", referencedColumnName = "id", nullable = false, updatable = false)
     @ManyToOne(optional = false, targetEntity = Project.class)
     Project project;
 
@@ -43,12 +43,12 @@ public class Supporter {
 //    User supportUser;
 
 
-    @JoinColumn(name = "createUserId", referencedColumnName = "id", nullable = false, updatable = false)
+    @JoinColumn(name = "create_by", referencedColumnName = "id", nullable = false, updatable = false)
     @ManyToOne(optional = false, targetEntity = User.class)
     protected User createBy;
 
 
-    @JoinColumn(name = "updateUserId", referencedColumnName = "id", nullable = false, updatable = false)
+    @JoinColumn(name = "update_by", referencedColumnName = "id", nullable = false, updatable = false)
     @ManyToOne(optional = false, targetEntity = User.class)
     protected User updateBy;
 
@@ -82,8 +82,8 @@ public class Supporter {
         this.project = project;
         this.createBy = user;
         this.updateBy = user;
-        this.createDate = new Date();
-        this.updateDate = new Date();
+//        this.createDate = new Date();
+//        this.updateDate = new Date();
     }
 
 
