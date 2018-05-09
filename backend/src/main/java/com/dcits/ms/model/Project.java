@@ -3,12 +3,9 @@ package com.dcits.ms.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * 项目信息表
@@ -17,7 +14,7 @@ import java.util.Date;
 @Setter
 @Getter
 @Table(name = "ms_project")
-public class Project {
+public class Project extends DataEntity{
 
 
     @Id
@@ -59,32 +56,6 @@ public class Project {
     String state;
 
 
-    @JoinColumn(name = "create_by", referencedColumnName = "id", nullable = false, updatable = false)
-    @ManyToOne(optional = false, targetEntity = User.class)
-    protected User createBy;
-
-
-    @JoinColumn(name = "update_by", referencedColumnName = "id", nullable = false, updatable = false)
-    @ManyToOne(optional = false, targetEntity = User.class)
-    protected User updateBy;
-
-    // 备注
-    @Column
-    protected String remarks;
-
-    // 创建日期
-    @Column
-    @CreatedDate
-    protected Date createDate;
-
-    // 更新日期
-    @Column
-    @LastModifiedDate
-    protected Date updateDate;
-
-    // 删除标记（0：正常；1：删除）
-    @Column
-    protected String delFlag;
 
 
     public Project() {
@@ -99,8 +70,6 @@ public class Project {
         this.createBy = user;
         this.updateBy = user;
         this.bidRatio = bidRatio;
-//        this.createDate = new Date();
-//        this.updateDate = new Date();
         this.state = "1";
     }
 
