@@ -78,7 +78,7 @@ export default function request(url, options) {
     ...newOptions.headers,
   };
 
-  // console.log('headers: ' + getAuthorizations());
+  // console.log('headers: ' + JSON.stringify(newOptions.headers));
 
   return fetch(url, newOptions)
     .then(checkStatus)

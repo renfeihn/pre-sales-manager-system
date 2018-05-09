@@ -294,8 +294,8 @@ export default class AdvancedProfile extends Component {
 
     return (
       <PageHeaderLayout
-        title={"项目名称"}
-        logo={
+        title={"项目名称" + project.baseProject ? project.baseProject.name : ''}
+          logo={
           <img alt="" src="https://gw.alipayobjects.com/zos/rmsportal/nxkuOJlFJuAUhzlMTCEe.png"/>
         }
         content={description}

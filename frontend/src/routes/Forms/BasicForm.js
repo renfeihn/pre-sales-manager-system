@@ -61,6 +61,18 @@ export default class BasicForms extends PureComponent {
           type: 'form/submitProjectForm',
           payload: values,
         });
+
+
+        // const response = yield call(fakeAccountLogin, payload);
+        // yield put({
+        //   type: 'changeLoginStatus',
+        //   payload: response,
+        // });
+        // // Login successfully
+        // if (response.status === 'ok') {
+        //   reloadAuthorized();
+        //   yield put(routerRedux.push('/'));
+        // }
       }
     });
   };
