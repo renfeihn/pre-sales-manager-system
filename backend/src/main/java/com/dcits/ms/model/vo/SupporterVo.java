@@ -1,20 +1,15 @@
 package com.dcits.ms.model.vo;
 
-import com.dcits.ms.model.Project;
-import com.dcits.ms.model.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-
-import javax.persistence.*;
-import java.util.Date;
 
 /**
  * 项目支持人员VO
  */
 @Setter
 @Getter
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SupporterVo {
 
 
@@ -28,6 +23,10 @@ public class SupporterVo {
 
     // 部门名称
     String departmentName;
+
+
+    public SupporterVo() {
+    }
 
 
     public SupporterVo(Integer id, String name, String jobTitle, String departmentName) {

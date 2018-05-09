@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,6 +13,10 @@ import java.util.List;
 @Setter
 @Getter
 public class ProjectVo {
+
+
+    public ProjectVo() {
+    }
 
     Integer id;
 
@@ -40,7 +43,6 @@ public class ProjectVo {
     String remarks;
 
     List<SupporterVo> supporters;
-
 
     String createDate;
 

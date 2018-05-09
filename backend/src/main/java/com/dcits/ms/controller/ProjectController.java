@@ -36,9 +36,8 @@ public class ProjectController extends BaseController {
     }
 
     @RequestMapping(value = "/project", method = RequestMethod.POST)
-    public HttpEntity<Project> save(@RequestBody ProjectVo projectVo, HttpServletRequest request) {
+    public HttpEntity<Project> save(HttpServletRequest request, @RequestBody ProjectVo projectVo) {
 
-//        String name = securityAppContext.getContext().getAuthentication().getName();
         User user = this.getUser(request);
 
         Project project = projectService.create(projectVo, user);
