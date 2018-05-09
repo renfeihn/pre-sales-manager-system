@@ -178,24 +178,21 @@ const columns1 = [
   },
 ];
 
-@connect(({profile, id, loading}) => ({
+@connect(({profile, loading}) => ({
   profile,
-  id,
   loading: loading.effects['profile/fetchAdvanced'],
 }))
 export default class AdvancedProfile extends Component {
   state = {
     operationkey: 'tab1',
     stepDirection: 'horizontal',
-    id: 1,
   };
 
   componentDidMount() {
-    const {dispatch} = this.props;
-    dispatch({
+    this.props.dispatch({
       type: 'profile/fetchAdvanced',
       payload: {
-        id: this.state.id,
+        id: this.props.location.state.id,
       },
     });
 
@@ -297,7 +294,7 @@ export default class AdvancedProfile extends Component {
 
     return (
       <PageHeaderLayout
-        title={"项目名称：" + project.baseProject ? project.baseProject.name : '' }
+        title={"项目名称"}
         logo={
           <img alt="" src="https://gw.alipayobjects.com/zos/rmsportal/nxkuOJlFJuAUhzlMTCEe.png"/>
         }

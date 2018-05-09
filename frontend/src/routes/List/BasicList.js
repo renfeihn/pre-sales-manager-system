@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import moment from 'moment';
 import {Link, Route, routerRedux} from 'dva/router';
-import {AdvancedProfile} from '../Profile/AdvancedProfile';
+import AdvancedProfile from '../Profile/AdvancedProfile';
 
 import {connect} from 'dva';
 import {
@@ -41,11 +41,14 @@ export default class BasicList extends PureComponent {
     });
   };
 
-
-  handleDispatch(id) {
-    dispatch(
+  /**
+   * 详情页面
+   * @param {项目编号} id 
+   */
+  handleDispatchDtl(e,id) {
+    this.props.dispatch(
       routerRedux.push({
-        pathname: '/user/register-result',
+        pathname: '/profile/advanced/',
         state: {
           id: id,
         },
@@ -160,9 +163,8 @@ export default class BasicList extends PureComponent {
               renderItem={item => (
                 <List.Item actions={[<a>编辑</a>, <a>删除</a>]}>
                   <List.Item.Meta
-                    avatar={<Avatar src={item.logo} shape="square" size="large"/>}
-                    title={<Route path={"profile/advanced/" + item.id}
-                                  component={AdvancedProfile}>{item.baseProject.name}</Route>}
+                    avatar={<Avatar src={item.logo} shape="square" size="large" />}
+                    title={<a onClick={e => this.handleDispatchDtl(e,item.id)}>{item.baseProject.name}</a>}
                     description={item.projectDesc}
                   />
                   <ListContent data={item}/>
