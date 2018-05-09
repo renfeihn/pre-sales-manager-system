@@ -7,6 +7,7 @@ import com.dcits.ms.model.vo.ActivityVo;
 import com.dcits.ms.model.vo.ProjectVo;
 import com.dcits.ms.service.ProjectService;
 import com.dcits.ms.service.SupporterService;
+import com.dcits.ms.util.Lists;
 import com.dcits.ms.util.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -61,11 +62,11 @@ public class ProjectController extends BaseController {
     public HttpEntity<Project> getProjectInfo(Integer id) {
         Map map = Maps.newHashMap();
         Project project = projectService.findById(id);
-        map.put("project", project);
+        map.put("project", null == project ? new Project() : project);
 
         List<Supporter> supporters = this.supporterService.findSupporterByProject(project);
 
-        map.put("supporters", supporters);
+        map.put("supporters", null == supporters ? Lists.newArrayList() : supporters);
 
         return new HttpEntity(map);
     }

@@ -84,17 +84,18 @@ const desc3 = (
   </div>
 );
 
-const popoverContent = (
-  <div style={{width: 160}}>
-    吴加号
-    <span className={styles.textSecondary} style={{float: 'right'}}>
-      <Badge status="default" text={<span style={{color: 'rgba(0, 0, 0, 0.45)'}}>未响应</span>}/>
-    </span>
-    <div className={styles.textSecondary} style={{marginTop: 4}}>
-      耗时：2小时25分钟
-    </div>
-  </div>
-);
+const popoverContent = '';
+// const popoverContent = (
+//   <div style={{width: 160}}>
+//     吴加号
+//     <span className={styles.textSecondary} style={{float: 'right'}}>
+//       <Badge status="default" text={<span style={{color: 'rgba(0, 0, 0, 0.45)'}}>未响应</span>}/>
+//     </span>
+//     <div className={styles.textSecondary} style={{marginTop: 4}}>
+//       耗时：2小时25分钟
+//     </div>
+//   </div>
+// );
 
 const customDot = (dot, {status}) =>
   status === 'process' ? (
@@ -192,7 +193,7 @@ export default class AdvancedProfile extends Component {
     this.props.dispatch({
       type: 'profile/fetchAdvanced',
       payload: {
-        id: this.props.location.state.id,
+        id: this.props.location.state ? this.props.location.state.id : '-1',
       },
     });
 
@@ -223,16 +224,28 @@ export default class AdvancedProfile extends Component {
         stepDirection: 'horizontal',
       });
     }
-  }
+  };
+
+  getProjectName(project){
+    let name = '';
+    if(null != project && undefined !=project){
+      if(null != project.baseProject && undefined != project.baseProject){
+        name = project.baseProject.name;
+      }
+    }
+    return name;
+  };
 
   render() {
     const {stepDirection} = this.state;
     const {profile, loading} = this.props;
     const {advancedOperation1, advancedOperation2, advancedOperation3, project, supporters} = profile;
 
+    // console.log('project: '+project);
+    // console.log('supporters: '+supporters);
     // console.log(project.baseProject);
 
-    const projectName = project.baseProject ? project.baseProject.name : '';
+    const projectName = this.getProjectName(project);
 
     const description = (
       <DescriptionList className={styles.headerList} size="small" col="2">
@@ -296,7 +309,7 @@ export default class AdvancedProfile extends Component {
 
     return (
       <PageHeaderLayout
-        title={"项目名称" + projectName}
+        title={"项目名称：" + projectName}
           logo={
           <img alt="" src="https://gw.alipayobjects.com/zos/rmsportal/nxkuOJlFJuAUhzlMTCEe.png"/>
         }
@@ -305,7 +318,7 @@ export default class AdvancedProfile extends Component {
         tabList={tabList}
       >
         <Card title="流程进度" style={{marginBottom: 24}} bordered={false}>
-          <Steps direction={stepDirection} progressDot={customDot} current={1}>
+          <Steps direction={stepDirection} progressDot={customDot} current={project.state ? 0 : project.state}>
             <Step title="创建项目" description={desc1}/>
             <Step title="POC进行中"/>
             <Step title="完成"/>
