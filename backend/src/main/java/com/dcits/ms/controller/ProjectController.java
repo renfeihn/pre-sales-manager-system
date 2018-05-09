@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -35,10 +36,10 @@ public class ProjectController extends BaseController {
     }
 
     @RequestMapping(value = "/project", method = RequestMethod.POST)
-    public HttpEntity<Project> save(@RequestBody ProjectVo projectVo) {
+    public HttpEntity<Project> save(@RequestBody ProjectVo projectVo, HttpServletRequest request) {
 
 //        String name = securityAppContext.getContext().getAuthentication().getName();
-        User user = this.getUser();
+        User user = this.getUser(request);
 
         Project project = projectService.create(projectVo, user);
         return new HttpEntity(project);
