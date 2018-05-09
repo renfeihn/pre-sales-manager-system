@@ -33,9 +33,15 @@ public class ProjectService {
     SupporterService supporterService;
 
 
+    /**
+     * 功能说明：创建项目信息，人员信息每次全删除，新增
+     * @param projectVo
+     * @param user
+     * @return
+     */
     public Project create(ProjectVo projectVo, User user) {
         Project project = projectFactory.create(projectVo, user);
-        projectRepository.save(project);
+        projectRepository.saveAndFlush(project);
 
         supporterService.create(projectVo.getSupporters(), project, user);
         return project;
@@ -105,7 +111,6 @@ public class ProjectService {
      */
     public List<ActivityVo> findActivities(Integer max) {
         List<ActivityVo> result = new ArrayList<>();
-//        PageRequest pageRequest = new PageRequest(0, 10);
         List<Project> list = (List) projectRepository.findByNum(6);
         if (BusiUtil.isNotNull(list)) {
             ActivityVo activityVo = null;

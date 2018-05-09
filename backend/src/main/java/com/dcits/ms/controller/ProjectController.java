@@ -38,7 +38,6 @@ public class ProjectController extends BaseController {
 
     @RequestMapping(value = "/project", method = RequestMethod.POST)
     public HttpEntity<Project> save(HttpServletRequest request, @RequestBody ProjectVo projectVo) {
-
         User user = this.getUser(request);
 
         Project project = projectService.create(projectVo, user);

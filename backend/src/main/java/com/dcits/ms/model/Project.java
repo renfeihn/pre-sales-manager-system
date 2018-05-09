@@ -91,7 +91,8 @@ public class Project {
     }
 
 
-    public Project(String projectDesc, String startDate, String endDate,BigDecimal bidRatio, User user) {
+    public Project(Integer id,String projectDesc, String startDate, String endDate,BigDecimal bidRatio, User user) {
+        this.id = id;
         this.projectDesc = projectDesc;
         this.startDate = subDate(startDate);
         this.endDate = subDate(endDate);

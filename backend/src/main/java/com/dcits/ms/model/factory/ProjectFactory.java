@@ -24,7 +24,7 @@ public class ProjectFactory {
 
     public Project create(ProjectVo projectVo, User user) {
 
-        Project project = new Project(projectVo.getProjectDesc(),
+        Project project = new Project(projectVo.getId(),projectVo.getProjectDesc(),
                 projectVo.getDate()[0], projectVo.getDate()[1], projectVo.getBidRatio(), user);
 
         BaseProject baseProject = baseProjectService.findById(projectVo.getBaseProjectId());

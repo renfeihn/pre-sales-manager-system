@@ -24,10 +24,13 @@ public class SupporterService {
 
 
     public void create(List<SupporterVo> supporterVos, Project project, User user) {
+
+        // 先根据项目删除，再进行保存
+        supporterRepository.deleteSupporterByProject(project);
+
         for (SupporterVo supporterVo : supporterVos) {
             Supporter supporter = supporterFactory.create(supporterVo, project, user);
             supporterRepository.save(supporter);
-
         }
     }
 
