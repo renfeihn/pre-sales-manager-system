@@ -230,7 +230,9 @@ export default class AdvancedProfile extends Component {
     const {profile, loading} = this.props;
     const {advancedOperation1, advancedOperation2, advancedOperation3, project, supporters} = profile;
 
-    // console.log(project);
+    // console.log(project.baseProject);
+
+    const projectName = project.baseProject ? project.baseProject.name : '';
 
     const description = (
       <DescriptionList className={styles.headerList} size="small" col="2">
@@ -294,7 +296,7 @@ export default class AdvancedProfile extends Component {
 
     return (
       <PageHeaderLayout
-        title={"项目名称" + project.baseProject ? project.baseProject.name : ''}
+        title={"项目名称" + projectName}
           logo={
           <img alt="" src="https://gw.alipayobjects.com/zos/rmsportal/nxkuOJlFJuAUhzlMTCEe.png"/>
         }
