@@ -52,7 +52,7 @@ const menuData = [
 
         ],
     },
-    {
+    /*{
         name: '项目查看',
         icon: 'profile',
         path: 'profile',
@@ -65,7 +65,7 @@ const menuData = [
             },
         ],
     },
-    /*
+
     {
         name: '结果页',
         icon: 'check-circle-o',
