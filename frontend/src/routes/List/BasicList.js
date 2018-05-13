@@ -43,7 +43,7 @@ export default class BasicList extends PureComponent {
 
   /**
    * 详情页面
-   * @param {项目编号} id 
+   * @param {项目编号} id
    */
   handleDispatchDtl(e,id) {
     this.props.dispatch(
@@ -86,7 +86,7 @@ export default class BasicList extends PureComponent {
       total: 50,
     };
 
-    const ListContent = ({data: {createBy, startDate, percent, status}}) => (
+    const ListContent = ({data: {createBy, updateDate, percent, status}}) => (
 
       // console.log(createBy),
 
@@ -96,8 +96,8 @@ export default class BasicList extends PureComponent {
           <p>{createBy.zhName}</p>
         </div>
         <div className={styles.listContentItem}>
-          <span>开始时间</span>
-          <p>{moment(startDate).format('YYYY-MM-DD HH:mm')}</p>
+          <span>最后更新日期</span>
+          <p>{moment(updateDate).format('YYYY-MM-DD HH:mm')}</p>
         </div>
         <div className={styles.listContentItem}>
           <Progress percent={percent} status={status} strokeWidth={6} style={{width: 180}}/>
@@ -164,7 +164,7 @@ export default class BasicList extends PureComponent {
                 <List.Item actions={[<a>编辑</a>, <a>删除</a>]}>
                   <List.Item.Meta
                     avatar={<Avatar src={item.logo} shape="square" size="large" />}
-                    title={<a onClick={e => this.handleDispatchDtl(e,item.id)}>{item.baseProject.name}</a>}
+                    title={<a onClick={e => this.handleDispatchDtl(e,item.id)}>{item.projectName}</a>}
                     description={item.projectDesc}
                   />
                   <ListContent data={item}/>

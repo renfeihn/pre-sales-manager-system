@@ -22,6 +22,8 @@ import classNames from 'classnames';
 import DescriptionList from 'components/DescriptionList';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import styles from './AdvancedProfile.less';
+import staticParam from '../../../mock/param';
+
 
 const {Step} = Steps;
 const {Description} = DescriptionList;
@@ -43,15 +45,6 @@ const menu = (
 //     <Button>驳回</Button>
 //   </Fragment>
 // );
-
-const extra = (
-  <Row>
-    <Col xs={24} sm={12}>
-      <div className={styles.textSecondary}>状态</div>
-      <div className={styles.heading}>新建</div>
-    </Col>
-  </Row>
-);
 
 
 const tabList = [
@@ -226,15 +219,28 @@ export default class AdvancedProfile extends Component {
     }
   };
 
-  getProjectName(project){
+  getProjectName(project) {
     let name = '';
-    if(null != project && undefined !=project){
-      if(null != project.baseProject && undefined != project.baseProject){
+    if (null != project && undefined != project) {
+      if (null != project.baseProject && undefined != project.baseProject) {
         name = project.baseProject.name;
       }
     }
     return name;
   };
+
+  getValue(key, array) {
+    let value;
+
+    for (let i in array) {
+      if (array[i].key == key) {
+        value = array[i].name;
+        break;
+      }
+    }
+
+    return value;
+  }
 
   render() {
     const {stepDirection} = this.state;
@@ -245,13 +251,23 @@ export default class AdvancedProfile extends Component {
     // console.log('supporters: '+supporters);
     // console.log(project.baseProject);
 
-    const projectName = this.getProjectName(project);
+    // const projectName = this.getProjectName(project);
+
+    const extra = (
+      <Row>
+        <Col xs={24} sm={12}>
+          <div className={styles.textSecondary}>落单情况</div>
+          <div className={styles.heading}>{this.getValue(project.state, staticParam.getParam.state)}</div>
+        </Col>
+      </Row>
+    );
 
     const description = (
       <DescriptionList className={styles.headerList} size="small" col="2">
         <Description term="创建人">{ project.createBy ? project.createBy.zhName : ''}</Description>
         <Description term="事业部">{project.department ? project.department.name : ''}</Description>
-        <Description term="创建时间">{moment(project.createDate ? project.createDate : 0).format('YYYY-MM-DD HH:mm')}</Description>
+        <Description
+          term="创建时间">{moment(project.createDate ? project.createDate : 0).format('YYYY-MM-DD HH:mm')}</Description>
         <Description term="生效日期">{project.startDate} ~ {project.endDate}</Description>
         <Description term="项目信息">{project.projectDesc}</Description>
         <Description term="备注">{project.remarks}</Description>
@@ -309,8 +325,8 @@ export default class AdvancedProfile extends Component {
 
     return (
       <PageHeaderLayout
-        title={"项目名称：" + projectName}
-          logo={
+        title={project.projectName}
+        logo={
           <img alt="" src="https://gw.alipayobjects.com/zos/rmsportal/nxkuOJlFJuAUhzlMTCEe.png"/>
         }
         content={description}

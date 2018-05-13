@@ -87,18 +87,12 @@ export default class Workplace extends PureComponent {
     const {activities: {list}} = this.props;
     return list.map(item => {
       const events = item.template.split(/@\{([^{}]*)\}/gi).map(key => {
-        // if (item[key]) {
-        //   return (
-        //     <a href={item[key].link} key={item[key].name}>
-        //       {item[key].name}
-        //     </a>
-        //   );
-        // }
+
         if (item[key]) {
           if ('project' == key) {
             return (
-              <a href={item[key].link} key={(item[key].baseProject).name}>
-                {(item[key].baseProject).name}
+              <a href={item[key].link} key={item[key].projectName}>
+                {item[key].projectName}
               </a>
             );
           } else {
@@ -109,6 +103,7 @@ export default class Workplace extends PureComponent {
             );
           }
         }
+        ;
         return key;
       });
       return (

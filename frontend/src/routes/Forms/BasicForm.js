@@ -21,6 +21,7 @@ import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import styles from './style.less';
 import FooterToolbar from 'components/FooterToolbar';
 import TableForm from './TableForm';
+import staticParam from '../../../mock/param';
 
 const FormItem = Form.Item;
 const {Option} = Select;
@@ -102,6 +103,11 @@ export default class BasicForms extends PureComponent {
     const projectOption = project.map(d => <Option key={d.id}>{d.name}</Option>);
     const departmentOption = department.map(d => <Option key={d.id}>{d.name}</Option>);
 
+    const isPocOption = staticParam.getParam.isPoc.map(d => <Option key={d.key}>{d.name}</Option>);
+    const stateOption = staticParam.getParam.state.map(d => <Option key={d.key}>{d.name}</Option>);
+    const solutionOption = staticParam.getParam.solution.map(d => <Option key={d.key}>{d.name}</Option>);
+    const importanceOption = staticParam.getParam.importance.map(d => <Option key={d.key}>{d.name}</Option>);
+
     const formItemLayout = {
       labelCol: {
         xs: {span: 24},
@@ -129,30 +135,34 @@ export default class BasicForms extends PureComponent {
         <Form onSubmit={this.handleSubmit} hideRequiredMark style={{marginTop: 8}}>
 
           <Card bordered={false} className={styles.card}>
-            <FormItem {...formItemLayout} label="项目名称">
-              {getFieldDecorator('baseProjectId', {
-                rules: [
-                  {
-                    required: true,
-                    message: '请选择项目名称',
-                  },
-                ],
-              })(<Select placeholder="请选择项目">
-                  {projectOption}
-                </Select>
+
+            <FormItem {...formItemLayout} label="客户名称">
+              {getFieldDecorator('clientName')
+              (<Input placeholder="请填写客户名称" />
               )}
             </FormItem>
 
-            <FormItem {...formItemLayout} label="产品线">
-              {getFieldDecorator('productId', {
+            <FormItem {...formItemLayout} label="项目名称">
+              {getFieldDecorator('projectName', {
                 rules: [
                   {
                     required: true,
-                    message: '请选择产品线',
+                    message: '请填写项目名称',
                   },
                 ],
-              })(<Select placeholder="请选择产品线">
-                  {productOption}
+              })(<Input placeholder="请填写项目名称" />
+              )}
+            </FormItem>
+            <FormItem {...formItemLayout} label="重要程度">
+              {getFieldDecorator('importance', {
+                rules: [
+                  {
+                    required: true,
+                    message: '请选择重要程度',
+                  },
+                ],
+              })(<Select placeholder="请选择重要程度">
+                  {importanceOption}
                 </Select>
               )}
             </FormItem>
@@ -170,34 +180,150 @@ export default class BasicForms extends PureComponent {
                 </Select>
               )}
             </FormItem>
-            <FormItem {...formItemLayout} label="起止日期">
-              {getFieldDecorator('date', {
+            <FormItem {...formItemLayout} label="客户经理">
+              {getFieldDecorator('clientDirector')
+              (<Input placeholder="请填写客户经理" />
+              )}
+            </FormItem>
+            <FormItem {...formItemLayout} label="产品线">
+              {getFieldDecorator('productId', {
                 rules: [
                   {
                     required: true,
-                    message: '请选择起止日期',
+                    message: '请选择产品线',
                   },
                 ],
-              })(<RangePicker style={{width: '100%'}} placeholder={['开始日期', '结束日期']}/>)}
+              })(<Select placeholder="请选择产品线">
+                  {productOption}
+                </Select>
+              )}
             </FormItem>
-            <FormItem {...formItemLayout} label="目标描述">
-              {getFieldDecorator('projectDesc', {
+            <FormItem {...formItemLayout} label="解决方案">
+              {getFieldDecorator('solution', {
                 rules: [
                   {
                     required: true,
-                    message: '请输入项目描述',
+                    message: '请输选择解决方案',
+                  },
+                ],
+              })(<Select placeholder="请选择事业部">
+                  {solutionOption}
+                </Select>
+              )}
+            </FormItem>
+
+            <FormItem {...formItemLayout} label="模块">
+              {getFieldDecorator('module')
+              (<Input placeholder="请填写所属模块" />
+              )}
+            </FormItem>
+
+            {/*
+            <FormItem {...formItemLayout} label="模块">
+              {getFieldDecorator('module', {
+                rules: [
+                  {
+                    required: true,
+                    message: '请选择模块',
+                  },
+                ],
+              })(<Select placeholder="请选择所属模块">
+                  {departmentOption}
+                </Select>
+              )}
+            </FormItem>
+            */}
+
+            <FormItem {...formItemLayout} label="落单情况">
+              {getFieldDecorator('state', {
+                rules: [
+                  {
+                    required: true,
+                    message: '请选择落单情况',
+                  },
+                ],
+              })(<Select placeholder="请选择落单情况">
+                  {stateOption}
+                </Select>
+              )}
+            </FormItem>
+            <FormItem {...formItemLayout} label="当前状态">
+              {getFieldDecorator('stateDesc', {
+                rules: [
+                  {
+                    required: true,
+                    message: '请输入当前状态',
                   },
                 ],
               })(
                 <TextArea
                   style={{minHeight: 32}}
-                  placeholder="请输入你的项目的基本描述"
+                  placeholder="请输入当前状态情况"
                   rows={4}
                 />
               )}
             </FormItem>
 
+            <FormItem {...formItemLayout} label="交流时间">
+              {getFieldDecorator('swapDate')
+              (<DatePicker style={{width: '100%'}} placeholder={'交流时间'}/>)}
+            </FormItem>
+            <FormItem {...formItemLayout} label="交流人员">
+              {getFieldDecorator('projectDesc')(
+                <TextArea
+                  style={{minHeight: 32}}
+                  placeholder="请输入你交流人员"
+                  rows={4}
+                />
+              )}
+            </FormItem>
 
+            <FormItem {...formItemLayout} label="初步预算（万元）">
+              {getFieldDecorator('budget')
+              (<Input placeholder="请填写初步预算" />
+              )}
+            </FormItem>
+
+            <FormItem {...formItemLayout} label="是否POC">
+              {getFieldDecorator('isPoc', {
+                rules: [
+                  {
+                    required: true,
+                    message: '请选择是否POC',
+                  },
+                ],
+              })(<Select placeholder="请选择是否POC">
+                  {isPocOption}
+                </Select>
+              )}
+            </FormItem>
+
+            <FormItem {...formItemLayout} label="工作量初估（人月）">
+              {getFieldDecorator('workload')
+              (<Input placeholder="请填写工作量" />
+              )}
+            </FormItem>
+
+            <FormItem {...formItemLayout} label="说明">
+              {getFieldDecorator('remarks')(
+                <TextArea
+                  style={{minHeight: 32}}
+                  placeholder="请填写项目说明"
+                  rows={4}
+                />
+              )}
+            </FormItem>
+            <FormItem {...formItemLayout} label="提交资料情况">
+              {getFieldDecorator('projectDesc')(
+                <TextArea
+                  style={{minHeight: 32}}
+                  placeholder="请填写提交资料情况"
+                  rows={4}
+                />
+              )}
+            </FormItem>
+
+            {/*
             <FormItem
               {...formItemLayout}
               label={
@@ -206,10 +332,10 @@ export default class BasicForms extends PureComponent {
                         </span>
               }
             >
-              {/*getFieldDecorator('weight')(<InputNumber placeholder="请输入" min={0} max={100}/>)*/} {/*<span>%</span>*/}
               {getFieldDecorator('bidRatio')(<Rate allowHalf defaultValue={2.5}/>)}
 
             </FormItem>
+            */}
 
           </Card>
 
