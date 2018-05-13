@@ -68,7 +68,7 @@ public class ProjectService {
                 projectVo.setId(project.getId());
                 projectVo.setProductName(project.getProduct().getName());
                 projectVo.setDepartmentName(project.getDepartment().getName());
-                projectVo.setProjectName(project.getBaseProject().getName());
+                projectVo.setProjectName(project.getProjectName());
                 projectVo.setProjectDesc(project.getProjectDesc());
                 projectVo.setUpdateDate(DateUtil.getYyyyMMdd(project.getUpdateDate()));
                 projectVo.setLogo("https://gw.alipayobjects.com/zos/rmsportal/nxkuOJlFJuAUhzlMTCEe.png");

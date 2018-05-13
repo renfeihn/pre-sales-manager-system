@@ -24,12 +24,17 @@ public class ProjectFactory {
 
     public Project create(ProjectVo projectVo, User user) {
 
-        Project project = new Project(projectVo.getId(),projectVo.getProjectDesc(),
-                projectVo.getDate()[0], projectVo.getDate()[1], projectVo.getBidRatio(), user);
+//        Project project = new Project(projectVo.getId(), projectVo.getProjectDesc(),
+//                projectVo.getDate()[0], projectVo.getDate()[1], user);
 
-        BaseProject baseProject = baseProjectService.findById(projectVo.getBaseProjectId());
+        Project project = new Project(projectVo.getId(), projectVo.getProjectName(), projectVo.getImportance(),
+                projectVo.getClientName(), projectVo.getClientDirector(), projectVo.getSolution(),
+                projectVo.getModule(), projectVo.getState(), projectVo.getStateDesc(), projectVo.getSwapDate(),
+                projectVo.getSwapPersons(), projectVo.getProjectDesc(), projectVo.getBudget(), projectVo.getIsPoc(),
+                projectVo.getWorkload(), projectVo.getRemarks(), user);
 
-        project.setBaseProject(baseProject);
+//        BaseProject baseProject = baseProjectService.findById(projectVo.getBaseProjectId());
+//        project.setBaseProject(baseProject);
 
         Integer departmentId = projectVo.getDepartmentId();
         Department department = departmentService.fingById(departmentId);
