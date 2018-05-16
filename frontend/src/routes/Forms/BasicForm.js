@@ -213,7 +213,14 @@ export default class BasicForms extends PureComponent {
             </FormItem>
 
             <FormItem {...formItemLayout} label="模块">
-              {getFieldDecorator('module')
+              {getFieldDecorator('module', {
+                rules: [
+                  {
+                    required: true,
+                    message: '请填写所属模块',
+                  },
+                ],
+              })
               (<Input placeholder="请填写所属模块" />
               )}
             </FormItem>
