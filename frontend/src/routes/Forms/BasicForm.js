@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
 import {connect} from 'dva';
+
 import {
   Form,
   Input,
@@ -16,6 +17,7 @@ import {
   TimePicker,
   Popover,
   Rate,
+  Switch,
 } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import styles from './style.less';
@@ -134,216 +136,242 @@ export default class BasicForms extends PureComponent {
       >
         <Form onSubmit={this.handleSubmit} hideRequiredMark style={{marginTop: 8}}>
 
-          <Card bordered={false} className={styles.card}>
+          <Card title="基本信息" bordered={false} className={styles.card}>
 
-            <FormItem {...formItemLayout} label="客户名称">
-              {getFieldDecorator('clientName')
-              (<Input placeholder="请填写客户名称" />
-              )}
-            </FormItem>
+            <Row gutter={16}>
+              <Col lg={12} md={12} sm={24}>
+                <FormItem {...formItemLayout} label="客户名称">
+                  {getFieldDecorator('clientName')
+                  (<Input placeholder="请填写客户名称"/>
+                  )}
+                </FormItem>
+              </Col>
+              <Col lg={12} md={12} sm={24}>
+                <FormItem {...formItemLayout} label="项目名称">
+                  {getFieldDecorator('projectName', {
+                    rules: [
+                      {
+                        required: true,
+                        message: '请填写项目名称',
+                      },
+                    ],
+                  })(<Input placeholder="请填写项目名称"/>
+                  )}
+                </FormItem>
+              </Col>
+            </Row>
+            <Row gutter={16}>
+              <Col lg={12} md={12} sm={24}>
+                <FormItem {...formItemLayout} label="重要程度">
+                  {getFieldDecorator('importance', {
+                    rules: [
+                      {
+                        required: true,
+                        message: '请选择重要程度',
+                      },
+                    ],
+                  })(<Select placeholder="请选择重要程度">
+                      {importanceOption}
+                    </Select>
+                  )}
+                </FormItem>
+              </Col>
+              <Col lg={12} md={12} sm={24}>
+                <FormItem {...formItemLayout} label="所属事业部">
+                  {getFieldDecorator('departmentId', {
+                    rules: [
+                      {
+                        required: true,
+                        message: '请输事业部名称',
+                      },
+                    ],
+                  })(<Select placeholder="请选择事业部">
+                      {departmentOption}
+                    </Select>
+                  )}
+                </FormItem>
+              </Col>
+            </Row>
 
-            <FormItem {...formItemLayout} label="项目名称">
-              {getFieldDecorator('projectName', {
-                rules: [
-                  {
-                    required: true,
-                    message: '请填写项目名称',
-                  },
-                ],
-              })(<Input placeholder="请填写项目名称" />
-              )}
-            </FormItem>
-            <FormItem {...formItemLayout} label="重要程度">
-              {getFieldDecorator('importance', {
-                rules: [
-                  {
-                    required: true,
-                    message: '请选择重要程度',
-                  },
-                ],
-              })(<Select placeholder="请选择重要程度">
-                  {importanceOption}
-                </Select>
-              )}
-            </FormItem>
+            <Row gutter={16}>
+              <Col lg={12} md={12} sm={24}>
 
-            <FormItem {...formItemLayout} label="所属事业部">
-              {getFieldDecorator('departmentId', {
-                rules: [
-                  {
-                    required: true,
-                    message: '请输事业部名称',
-                  },
-                ],
-              })(<Select placeholder="请选择事业部">
-                  {departmentOption}
-                </Select>
-              )}
-            </FormItem>
-            <FormItem {...formItemLayout} label="客户经理">
-              {getFieldDecorator('clientDirector')
-              (<Input placeholder="请填写客户经理" />
-              )}
-            </FormItem>
-            <FormItem {...formItemLayout} label="产品线">
-              {getFieldDecorator('productId', {
-                rules: [
-                  {
-                    required: true,
-                    message: '请选择产品线',
-                  },
-                ],
-              })(<Select placeholder="请选择产品线">
-                  {productOption}
-                </Select>
-              )}
-            </FormItem>
-            <FormItem {...formItemLayout} label="解决方案">
-              {getFieldDecorator('solution', {
-                rules: [
-                  {
-                    required: true,
-                    message: '请输选择解决方案',
-                  },
-                ],
-              })(<Select placeholder="请选择事业部">
-                  {solutionOption}
-                </Select>
-              )}
-            </FormItem>
+                <FormItem {...formItemLayout} label="客户经理">
+                  {getFieldDecorator('clientDirector')
+                  (<Input placeholder="请填写客户经理"/>
+                  )}
+                </FormItem>
+              </Col>
+              <Col lg={12} md={12} sm={24}>
+                <FormItem {...formItemLayout} label="产品线">
+                  {getFieldDecorator('productId', {
+                    rules: [
+                      {
+                        required: true,
+                        message: '请选择产品线',
+                      },
+                    ],
+                  })(<Select placeholder="请选择产品线">
+                      {productOption}
+                    </Select>
+                  )}
+                </FormItem>
+              </Col>
+            </Row>
+            <Row gutter={16}>
+              <Col lg={12} md={12} sm={24}>
+                <FormItem {...formItemLayout} label="解决方案">
+                  {getFieldDecorator('solution', {
+                    rules: [
+                      {
+                        required: true,
+                        message: '请输选择解决方案',
+                      },
+                    ],
+                  })(<Select placeholder="请选择事业部">
+                      {solutionOption}
+                    </Select>
+                  )}
+                </FormItem>
+              </Col>
+              <Col lg={12} md={12} sm={24}>
+                <FormItem {...formItemLayout} label="模块">
+                  {getFieldDecorator('module', {
+                    rules: [
+                      {
+                        required: true,
+                        message: '请填写所属模块',
+                      },
+                    ],
+                  })
+                  (<Input placeholder="请填写所属模块"/>
+                  )}
+                </FormItem>
+              </Col>
+            </Row>
 
-            <FormItem {...formItemLayout} label="模块">
-              {getFieldDecorator('module', {
-                rules: [
-                  {
-                    required: true,
-                    message: '请填写所属模块',
-                  },
-                ],
-              })
-              (<Input placeholder="请填写所属模块" />
-              )}
-            </FormItem>
+            <Row gutter={16}>
+              <Col lg={12} md={12} sm={24}>
+                <FormItem {...formItemLayout} label="落单情况">
+                  {getFieldDecorator('state', {
+                    rules: [
+                      {
+                        required: true,
+                        message: '请选择落单情况',
+                      },
+                    ],
+                  })(<Select placeholder="请选择落单情况">
+                      {stateOption}
+                    </Select>
+                  )}
+                </FormItem>
+              </Col>
+              <Col lg={12} md={12} sm={24}>
+                <FormItem {...formItemLayout} label="是否POC">
+                  {getFieldDecorator('isPoc', {
+                    rules: [
+                      {
+                        required: true,
+                        message: '请选择是否POC',
+                      },
+                    ],
+                  })(<Switch checkedChildren="是" unCheckedChildren="否" />
+                  )}
+                </FormItem>
+              </Col>
+            </Row>
 
-            {/*
-            <FormItem {...formItemLayout} label="模块">
-              {getFieldDecorator('module', {
-                rules: [
-                  {
-                    required: true,
-                    message: '请选择模块',
-                  },
-                ],
-              })(<Select placeholder="请选择所属模块">
-                  {departmentOption}
-                </Select>
-              )}
-            </FormItem>
-            */}
+            <Row gutter={16}>
+              <Col lg={12} md={12} sm={24}>
 
-            <FormItem {...formItemLayout} label="落单情况">
-              {getFieldDecorator('state', {
-                rules: [
-                  {
-                    required: true,
-                    message: '请选择落单情况',
-                  },
-                ],
-              })(<Select placeholder="请选择落单情况">
-                  {stateOption}
-                </Select>
-              )}
-            </FormItem>
-            <FormItem {...formItemLayout} label="当前状态">
-              {getFieldDecorator('stateDesc', {
-                rules: [
-                  {
-                    required: true,
-                    message: '请输入当前状态',
-                  },
-                ],
-              })(
-                <TextArea
-                  style={{minHeight: 32}}
-                  placeholder="请输入当前状态情况"
-                  rows={4}
-                />
-              )}
-            </FormItem>
+                <FormItem {...formItemLayout} label="当前状态">
+                  {getFieldDecorator('stateDesc', {
+                    rules: [
+                      {
+                        required: true,
+                        message: '请输入当前状态',
+                      },
+                    ],
+                  })(
+                    <TextArea
+                      style={{minHeight: 32}}
+                      placeholder="请输入当前状态情况"
+                      rows={4}
+                    />
+                  )}
+                </FormItem>
+              </Col>
+            </Row>
+          </Card>
+          <Card title="交流情况" bordered={false}>
+            <Row gutter={16}>
+              <Col lg={12} md={12} sm={24}>
+                <FormItem {...formItemLayout} label="交流时间">
+                  {getFieldDecorator('swapDate')
+                  (<DatePicker style={{width: '100%'}} placeholder={'交流时间'}/>)}
+                </FormItem>
+              </Col>
+              <Col lg={12} md={12} sm={24}>
 
-            <FormItem {...formItemLayout} label="交流时间">
-              {getFieldDecorator('swapDate')
-              (<DatePicker style={{width: '100%'}} placeholder={'交流时间'}/>)}
-            </FormItem>
-            <FormItem {...formItemLayout} label="交流人员">
-              {getFieldDecorator('projectDesc')(
-                <TextArea
-                  style={{minHeight: 32}}
-                  placeholder="请输入你交流人员"
-                  rows={4}
-                />
-              )}
-            </FormItem>
 
-            <FormItem {...formItemLayout} label="初步预算（万元）">
-              {getFieldDecorator('budget')
-              (<Input placeholder="请填写初步预算" />
-              )}
-            </FormItem>
+              </Col>
+            </Row>
 
-            <FormItem {...formItemLayout} label="是否POC">
-              {getFieldDecorator('isPoc', {
-                rules: [
-                  {
-                    required: true,
-                    message: '请选择是否POC',
-                  },
-                ],
-              })(<Select placeholder="请选择是否POC">
-                  {isPocOption}
-                </Select>
-              )}
-            </FormItem>
+            <Row gutter={16}>
+              <Col lg={12} md={12} sm={24}>
 
-            <FormItem {...formItemLayout} label="工作量初估（人月）">
-              {getFieldDecorator('workload')
-              (<Input placeholder="请填写工作量" />
-              )}
-            </FormItem>
+                <FormItem {...formItemLayout} label="初步预算（万元）">
+                  {getFieldDecorator('budget')
+                  (<Input placeholder="请填写初步预算"/>
+                  )}
+                </FormItem>
+              </Col>
+              <Col lg={12} md={12} sm={24}>
+                <FormItem {...formItemLayout} label="工作量初估（人月）">
+                  {getFieldDecorator('workload')
+                  (<Input placeholder="请填写工作量"/>
+                  )}
+                </FormItem>
+              </Col>
+            </Row>
+            <Row gutter={16}>
+              <Col lg={12} md={12} sm={24}>
+                <FormItem {...formItemLayout} label="交流人员">
+                  {getFieldDecorator('swapPersons')(
+                    <TextArea
+                      style={{minHeight: 32}}
+                      placeholder="请输入你交流人员"
+                      rows={4}
+                    />
+                  )}
+                </FormItem>
+              </Col>
+              <Col lg={12} md={12} sm={24}>
+                <FormItem {...formItemLayout} label="提交资料情况">
+                  {getFieldDecorator('projectDesc')(
+                    <TextArea
+                      style={{minHeight: 32}}
+                      placeholder="请填写提交资料情况"
+                      rows={4}
+                    />
+                  )}
+                </FormItem>
+              </Col>
+            </Row>
+            <Row gutter={16}>
+              <Col lg={12} md={12} sm={24}>
+                <FormItem {...formItemLayout} label="备注说明">
+                  {getFieldDecorator('remarks')(
+                    <TextArea
+                      style={{minHeight: 32}}
+                      placeholder="请填写项目备注"
+                      rows={4}
+                    />
+                  )}
+                </FormItem>
 
-            <FormItem {...formItemLayout} label="说明">
-              {getFieldDecorator('remarks')(
-                <TextArea
-                  style={{minHeight: 32}}
-                  placeholder="请填写项目说明"
-                  rows={4}
-                />
-              )}
-            </FormItem>
-            <FormItem {...formItemLayout} label="提交资料情况">
-              {getFieldDecorator('projectDesc')(
-                <TextArea
-                  style={{minHeight: 32}}
-                  placeholder="请填写提交资料情况"
-                  rows={4}
-                />
-              )}
-            </FormItem>
-
-            {/*
-            <FormItem
-              {...formItemLayout}
-              label={
-                <span>
-                        中标率<em className={styles.optional}></em>
-                        </span>
-              }
-            >
-              {getFieldDecorator('bidRatio')(<Rate allowHalf defaultValue={2.5}/>)}
-
-            </FormItem>
-            */}
-
+              </Col>
+            </Row>
           </Card>
 
           <Card title="支持人员" bordered={false}>

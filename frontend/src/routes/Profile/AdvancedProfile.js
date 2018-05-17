@@ -229,17 +229,30 @@ export default class AdvancedProfile extends Component {
     return name;
   };
 
+  // 获取下拉数据
   getValue(key, array) {
     let value;
-
     for (let i in array) {
       if (array[i].key == key) {
         value = array[i].name;
         break;
       }
     }
-
     return value;
+  }
+
+  // 获取流程进度
+  getSchedule(value) {
+    let s = '0';
+
+    if (null != value && '' != value && undefined != value) {
+      if (value == '1' || value == '6') {
+        s = '1';
+      } else {
+        s = '2';
+      }
+    }
+    return s;
   }
 
   render() {
@@ -264,13 +277,23 @@ export default class AdvancedProfile extends Component {
 
     const description = (
       <DescriptionList className={styles.headerList} size="small" col="2">
+
+        <Description term="客户名称">{ project.clientName}</Description>
+        <Description term="项目名称">{ project.projectName}</Description>
+        <Description term="重要程度">{this.getValue(project.importance, staticParam.getParam.importance)}</Description>
+        <Description term="所属事业部">{project.department ? project.department.name : ''}</Description>
+        <Description term="客户经理">{ project.clientDirector}</Description>
+        <Description term="产品线">{ project.product ? project.product.name : ''}</Description>
+        <Description term="解决方案">{this.getValue(project.solution, staticParam.getParam.solution)}</Description>
+        <Description term="模块">{ project.module}</Description>
+        <Description term="是否POC">{ project.isPoc == 'true' ? '是' : '否' }</Description>
+
+
         <Description term="创建人">{ project.createBy ? project.createBy.zhName : ''}</Description>
-        <Description term="事业部">{project.department ? project.department.name : ''}</Description>
         <Description
           term="创建时间">{moment(project.createDate ? project.createDate : 0).format('YYYY-MM-DD HH:mm')}</Description>
-        <Description term="生效日期">{project.startDate} ~ {project.endDate}</Description>
-        <Description term="项目信息">{project.projectDesc}</Description>
-        <Description term="备注">{project.remarks}</Description>
+        <Description term="提交资料情况">{project.projectDesc}</Description>
+        <Description term="备注说明">{project.remarks}</Description>
       </DescriptionList>
     );
 
@@ -334,9 +357,9 @@ export default class AdvancedProfile extends Component {
         tabList={tabList}
       >
         <Card title="流程进度" style={{marginBottom: 24}} bordered={false}>
-          <Steps direction={stepDirection} progressDot={customDot} current={project.state ? 0 : project.state}>
+          <Steps direction={stepDirection} progressDot={customDot} current={this.getSchedule(project.state)}>
             <Step title="创建项目" description={desc1}/>
-            <Step title="POC进行中"/>
+            <Step title="进行中"/>
             <Step title="完成"/>
           </Steps>
         </Card>
