@@ -22,12 +22,12 @@ public abstract class DataEntity {
 
 
     @JoinColumn(name = "createUserId", referencedColumnName = "id", nullable = false, updatable = false)
-    @OneToOne(optional = false, targetEntity = User.class)
+    @ManyToOne(optional = false, targetEntity = User.class)
     protected User createBy;
 
 
     @JoinColumn(name = "updateUserId", referencedColumnName = "id", nullable = false, updatable = false)
-    @OneToOne(optional = false, targetEntity = User.class)
+    @ManyToOne(optional = false, targetEntity = User.class)
     protected User updateBy;
 
     // 备注
