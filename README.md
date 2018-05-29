@@ -41,3 +41,13 @@ npm run build
 ### 结尾
 供大家交流学习
 
+
+### mac mysql
+启动MySQL服务
+sudo /usr/local/MySQL/support-files/mysql.server start
+
+停止MySQL服务
+sudo /usr/local/mysql/support-files/mysql.server stop
+
+重启MySQL服务
+sudo /usr/local/mysql/support-files/mysql.server restart
